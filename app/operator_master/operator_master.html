@@ -1,0 +1,111 @@
+   <div ng-include="'sidebar.html'"></div>
+   <div class="page home-page">     
+   <div ng-include="'header.html'"></div>
+
+  <section class="updates section-padding section_top" ng-init="clientinit()">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Daily Feed-->
+                    
+                    <div class="col-lg-12">
+                        <header>
+                         <div ng-show="myLoader" class="spinner">
+                            <img src="assets/images/spinner.gif" class="myspin">
+                        </div>
+                            <h1 class="h3 display"><i class="fa fa-laptop"></i>Operator Registration
+                            <a href="" ng-hide="role_Setup == 'operator'" class="btn_add" data-toggle="modal" data-target="#exampleModalLabel" ng-click="cleandata()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                          </h1>
+                        </header>
+                        <div class="card">
+                            <div class="card-block tablescroll">
+                                <table class="table table-striped table-sm table_front">
+                                    <thead>
+                                        <tr>
+                                           <th>Operator Name</th>
+                                           <th>Operator ID</th>
+                                           <th>Others</th>
+                                           <th ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="operator in operators" >
+                                           <td>{{ operator.operator_name }}</td>
+                                           <td>{{ operator.operator_spec_id }}</td>
+                                           <td>{{ operator.description }}</td>
+                                           <td>
+                                                <ul class="item-actions-list" ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'">
+                                                    <li>
+                                                        <a class="remove"> <i class="fa fa-trash-o " confirmed-click="delete(operator.id)"  ng-confirm-click="Do you want to delete"></i> </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="edit" data-toggle="modal"  data-target="#exampleModalLabel" title="Edit" ng-click="edit(operator.id)"> <i class="fa fa-pencil"></i> </a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- modal -->
+    <div class="modal fade" id="exampleModalLabel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Operator Registration</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body machine-registration">
+                    <form name="client">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Operator Name</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-Required="true"  ng-model="operatorregistration.operator_name" placeholder="First Name">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Operator ID</label>
+                                    <div class="input-group" >
+                                        <input type="text" class="form-control" ng-Required="true"  ng-model="operatorregistration.operator_spec_id" placeholder="ID">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Others</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-Required="true" ng-model="operatorregistration.description">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="client.$invalid" ng-click="operatorForm()" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <div ng-include="'footer.html'"></div>
+ </div>

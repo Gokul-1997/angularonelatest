@@ -1,0 +1,304 @@
+
+ <div ng-include="'adminsidebar.html'"></div>
+ <div class="page home-page">     
+ <div ng-include="'header.html'"></div>
+<section class="updates section-padding section_top" ng-init="deviceinit()">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-lg-12">
+                <header>
+                    <div ng-show="myLoader" class="spinner">
+                        <img src="assets/images/spinner.gif" class="myspin">
+                    </div>
+                    <h1 class="h3 display">
+                        <i class="fa fa-laptop"></i>Device Registration
+                        <a href="" class="btn_add" data-toggle="modal" data-target="#exampleModalLabel" ng-click="cleandata();">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </a>
+                    </h1>
+                </header>
+                <div class="card">
+                    <div class="card-block tablescroll">
+                        <table class="table table-striped table-sm table_front">
+                            <thead>
+                                <tr>
+                                    <th>Device Name</th>
+                                    <th>Purchase Date</th>
+                                    <th>Created_by</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="device in devices">
+                                    <td>{{ device.device_name }}</td>
+                                    <td>{{ device.purchase_date }}</td>
+                                    <td>{{ device.created_by }}</td>
+                                    <td>{{ device.description }}</td>
+
+                                    <td>
+                                        <ul class="item-actions-list">
+                                            <li>
+                                                <a class="remove">
+                                                    <i class="fa fa-trash-o " confirmed-click="delete(device.id)" ng-confirm-click="Do you want to delete"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="edit" data-toggle="modal" data-target="#exampleModalLabel" title="Edit" ng-click="edit(device.id)">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<section class="updates section-padding section_top" ng-init="mappingdeviceinit()">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-lg-12">
+                <header>
+                    <div ng-show="myLoader" class="spinner">
+                        <img src="assets/images/spinner.gif" class="myspin">
+                    </div>
+                    <h1 class="h3 display">
+                        <i class="fa fa-laptop"></i>Device Mapping
+                        <a href="" class="btn_add" data-toggle="modal" data-target="#exampleModalLabel1" ng-click="mappingdeviceclear();mappingdeviceinit()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </a>
+                    </h1>
+                </header>
+                <div class="card">
+                    <div class="card-block tablescroll">
+                        <table class="table table-striped table-sm table_front">
+                            <thead>
+                                <tr>
+                                    <th>Device Name</th>
+                                    <th>Tenant Name</th>
+                                    <th>Installing date</th>
+                                    <th>Remove date</th>
+                                    <th>No Of Machine</th>
+                                    <th>Reason</th>
+                                    <th>Name</th>
+
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="device in mappingdevice" >
+                                    <td>{{ device.device.device_name }}</td>
+                                    <td>{{ device.tenant.tenant_name }}</td>
+                                    <td>{{ device.installing_date }}</td>
+                                    <td>{{ device.removing_date }}</td>
+                                    <td>{{device.number_of_machine}}</td>
+                                    <td>{{ device.reasons }}</td>
+                                    <td>{{ device.created_by }}</td>
+                                  
+                                    <td>
+                                       
+                                        <ul class="item-actions-list">
+                                            <!-- <li>
+                                                <a class="remove">
+                                                    <i class="fa fa-trash-o " confirmed-click="delete(device.id)" ng-confirm-click="Do you want to delete"></i>
+                                                </a>
+                                            </li> -->
+                                            <li>
+                                                <a ng-show="device.is_active" class="edit" data-toggle="modal" data-target="#exampleModalLabel1" title="Edit" ng-click="mappingdeviceedit(device.id)">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+</div>
+<section>
+    <div class="modal fade" id="exampleModalLabel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> New Device Registration</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body machine-registration">
+                    <form name="client">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Device Name</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="deviceregistration.device_name" placeholder="Device Name" ng-Required="true">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" moment-picker="deviceregistration.purchase_date" format="DD-MM-YYYY" min-date="momentToday">
+
+                                    <label>Purchase Date</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="deviceregistration.purchase_date" placeholder="Purchase Date" ng-Required="true">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="deviceregistration.description" placeholder="Description">
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                    </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-disabled="client.$invalid" ng-click="deviceForm()" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+
+<div class="modal fade" id="exampleModalLabel1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1"> Mapping Registration</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body machine-registration">
+
+                <form name="devicemap">
+                    <div class="row">
+                        <div class="col-md-6" ng-hide="editval == 1">
+                            <div class="form-group">
+                              
+                                    <label>Select Device</label>
+                                    <div class="select">
+                                        <select name="account"  class="form-control" ng-options="tn.id as tn.device_name for tn in deviceList" ng-model="mappingdeviceregistration.device_id"
+                                            ng-Required="true">
+                                            <option value="">Select</option>
+                                        </select>
+                                    </div>
+                               
+                            </div>
+                        </div>
+                        <div class="col-md-6" ng-show="editval == 1">
+                                <div class="form-group">
+                                  
+                                        <label>Device</label>
+                                        <div class="select">
+                                                <input type="text" class="form-control" ng-disabled="editval == 1" ng-model="mappingdeviceregistration.device.device_name">
+                                        </div>
+                                   
+                                </div>
+                            </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              
+                                    <label>Select Tenant</label>
+                                    <div class="select">
+                                        <select name="account" class="form-control" ng-disabled="editval == 1" ng-options="tn.id as tn.tenant_name for tn in tenantList" ng-model="mappingdeviceregistration.tenant_id"
+                                            ng-Required="true">
+                                            <option value="">Select</option>
+                                        </select>
+                                    </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <div class="form-group" moment-picker="mappingdeviceregistration.installing_date" format="DD-MM-YYYY" max-date="momentToday">
+                                <label>Install Date</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </span>
+                                    <input type="text" class="form-control" ng-disabled="editval == 1" ng-Required="true" ng-model="mappingdeviceregistration.installing_date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label>No of Machine</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ng-disabled="editval == 1" ng-Required="true" ng-model="mappingdeviceregistration.number_of_machine" placeholder="No of Machine">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="editval == 1">
+
+                        <div class="col-md-6">
+
+                            <div class="form-group" moment-picker="mappingdeviceregistration.removing_date" format="DD-MM-YYYY" max-date="momentToday">
+                                <label>Remove Date</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </span>
+                                    <input type="text" class="form-control"  ng-model="mappingdeviceregistration.removing_date">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label>Reason</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ng-model="mappingdeviceregistration.reasons" placeholder="Reason">
+                                </div>
+
+                            </div>
+                        </div>
+                   </div>
+
+                </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="devicemap.$invalid" ng-click="mappingdeviceForm()">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>

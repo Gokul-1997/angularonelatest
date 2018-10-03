@@ -1,0 +1,32 @@
+<!-- Side Navbar -->
+<nav class="side-navbar">
+    <div class="side-navbar-wrapper">
+      <div class="sidenav-header d-flex align-items-center justify-content-center">
+        <img src="assets/images/logo.jpg" alt="person">
+      </div>
+      <div class="main-menu">
+                      
+      
+          <ul id="side-main-menu" class="side-menu list-unstyled">                  
+           
+             <li ng-class="{activebar:sidepath=='companydetails'}" class=""><a href="" ng-click="pageverification1('/#!/companydetails')"><i class="fa fa-desktop" aria-hidden="true" ></i><span>Machine Status</span></a></li>
+             <li ng-class="{activebar:sidepath=='alldetails'}" class=""><a href="" ng-click="pageverification1('/#!/alldetails')"><i class="fa fa-check-circle " aria-hidden="true" ></i><span>Approval</span></a></li>
+             <li ng-class="{activebar:sidepath=='adminuser'}" class=""><a href="" ng-click="pageverification1('/#!/adminuser')"><i class="fa fa-user-o" aria-hidden="true" ></i><span>Admin User</span></a></li>
+             <li ng-class="{activebar:sidepath=='setting'}" class=""><a href="" ng-click="pageverification1('/#!/setting')"><i class="fa fa-cogs" aria-hidden="true" ></i><span>Setting</span></a></li>
+             <li ng-class="{activebar:sidepath=='device'}" class=""><a href="" ng-click="pageverification1('/#!/device')"><i class="fa fa-tablet" aria-hidden="true" ></i><span>Device</span></a></li>
+             <li ng-class="{activebar:sidepath=='tenant'}" class=""><a href="" ng-click="pageverification1('/#!/tenant')"><i class="fa fa-users" aria-hidden="true" ></i><span>Customer Details</span></a></li>
+             <li ng-class="{activebar:sidepath=='device_registration'}" class=""><a href="" ng-click="pageverification1('/#!/device_registration')"><i class="fa fa-tablet" aria-hidden="true" ></i><span>Device Registration</span></a></li>
+            </ul>
+       
+      </div>
+    </div>
+  </nav>
+
+
+
+
+<style type="text/css">
+.activebar{
+background-color:#f7941d;
+}
+</style>

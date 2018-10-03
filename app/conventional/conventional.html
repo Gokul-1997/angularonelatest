@@ -1,0 +1,458 @@
+<style type="text/css">
+    .running{
+        /*background-color:rgb(76,175,80) ;*/
+        background-color: rgb(44,190,99);
+    }
+    .idle {
+      /*background-color:rgb(249,168,37) ;*/
+      background-color: rgb(232,162,73);
+    
+    }
+    .stopped{
+      /*background-color:rgb(198,40,40) ;*/
+      background-color: rgb(236,85,80);
+    }
+    .nodata{
+      background-color: #444444;
+    }
+    
+    
+    .tdtable{
+            border-left: 1px solid #dddddd;
+            font-family:"Montserrat";
+            font-size: 15px;
+            text-align: center;
+            color: grey;
+            padding: 10px;
+            width: 30%;
+    }
+    .tdtitle{
+            border-left: 1px solid #dddddd;
+            font-family:"Montserrat";
+            font-size: 15px;
+            text-align: center;
+            color: #4D4B4C;
+            padding: 10px; 
+            width: 30%;
+    }
+    
+    .bg_grey{
+            background-color: #f2f2f2;
+    }
+    
+    .target{
+        position: absolute;
+        right: -420px;
+        transition: ease 1s;
+        height: 100%;
+        padding:20px !important;
+        background: #fff !important;
+    
+      }
+      .target h2 span{
+        margin-right: 20px;
+      }
+      .target h2{
+        border-bottom: 1px solid #cecece;
+        padding-bottom: 10px;
+      }
+      
+    
+      .show_pop{
+        background: #fff;
+        right: 0px!important;
+      }
+      .machine-registration{
+        overflow: hidden;
+      }
+    
+    
+    </style> 
+    <div ng-include="'sidebar.html'"></div>
+       <div class="page home-page">     
+       <div ng-include="'header.html'"></div>
+       
+    
+     <section class="statistics section-padding section-no-padding-bottom section_top" ng-init="doRefresh()">
+        <header style="background: #fff; padding: 20px; margin-top: -17px; box-shadow: 3px 3px 3px #eaeaea;"> 
+            <div ng-show="myLoader" class="spinner">
+         <img src="assets/images/spinner.gif" class="myspin">
+     </div>
+        
+    
+         <h1 class="h3 display top"><i class="fa fa-laptop"></i>Conventional Machine Status
+         <ul>
+           <li><span class="dot_running"></span>Running</li>
+           <li><span class="dot_idle"></span>Idle</li>
+           <li><span class="dot_stop"></span>Stop</li>
+           <li><span class="dot_nodata"></span>No Data</li>
+           <li ng-click="doRefresh()" style="cursor:pointer"><i class="fa fa-refresh "></i></li>
+         </ul>
+         <div class="float-right entry_time"><span>Today:</span>{{ clock | date:'dd-MM-yyyy hh:mm:ss a'}} <span>Shift Time:</span> {{cardnames.data["Unit - 1"][0].start_time | date:'dd-MM-yyyy hh:mm a'}} <span>Shift:</span> {{cardnames.data["Unit - 1"][0].shift_no}}</div>
+         </h1>
+       </header>
+              <div class="container-fluid">
+              
+    
+    
+              <!-- <div ng-show="machineCount >= 5" ng-repeat="(key,val) in cardnames.data" >
+              <div class="row" style="margin-bottom:5px; padding-bottom: 10px; margin-top: 10px;">
+                  <div style="text-align: right;border-bottom:1px solid #ddd; margin-top: 20px; padding-bottom: 10px;" class="col col-100">
+                      <span style="float:left;font-size:16px">{{key}}</span>
+                      <span class="statusHeader" ng-click="statusfill = ''" style="font-size:14px; color: #f69123" >Machines({{val.length}})</span>
+                      <span class="statusHeader" ng-click="statusfill = 3"  style="font-size:14px; color: #396ae2;">Running({{cardnames.count[key].running -- 0}})</span>
+                      <span class="statusHeader" ng-click="statusfill = 0"  style="font-size:14px; color: #396ae2;">Idle({{(cardnames.count[key].idle1) -- (cardnames.count[key].idle)}})</span>
+                      <span class="statusHeader" ng-click="statusfill = 100" style="font-size:14px; color: #396ae2;">Stop({{cardnames.count[key].stop -- 0}})</span>
+                  </div>
+                </div>
+                <div class="row dashboard-machine" >
+                  <div class="col-sm-1" ng-repeat="y in val" >
+                    <div class="wrapper data-usage" ng-click="machineclick(y);">
+                      <div class="wrapper_idle" ng-class="{running :y.machine_status =='3' ,stopped :y.machine_status=='100',nodata: y.machine_status == null,idle : y.machine_status != '3' && y.machine_status !='100' && y.machine_status != null}">
+                        <div class="row d-flex align-items-center">
+                          <div class="col-sm-12">
+                            <percent-display percent="y.utilization" side="50" colors="#ede7f6 #A179C7"></percent-display>
+                            
+                            <p>UTILIZATION</p>
+                          
+                          </div>
+                        
+                        </div>
+                      </div>
+                    </div>
+                    <h2 class="display h4">
+                      <a href="" ng-click="machine_page_redirect(y.machine_id)">{{y.machine_name}}</a>
+                    </h2>
+                  </div>
+                </div>
+              </div> -->
+    
+    
+    
+    
+             <div  ng-repeat="(key,val) in cardnames.data">
+                  <div class="row" style="margin-bottom:5px;">
+                      <div style="text-align: right;border-bottom:1px solid #ddd; padding-bottom: 10px; margin-top: 10px;" class="col col-100 mec_status">
+                          <span style="float:left;font-size:16px">{{key}}</span>
+                          <span class="statusHeader" ng-click="statusfill = ''" style="font-size:14px; color: #f69123" >Machines({{val.length}})</span>
+                          <span class="statusHeader" ng-click="statusfill = 3"  style="font-size:14px; color: #396ae2;">Running({{cardnames.count[key].running -- 0}})</span>
+                          <span class="statusHeader" ng-click="statusfill = 0"  style="font-size:14px; color: #396ae2;">Idle({{(cardnames.count[key].idle1) -- (cardnames.count[key].idle)}})</span>
+                          <span class="statusHeader" ng-click="statusfill = 100" style="font-size:14px; color: #396ae2;">Stop({{cardnames.count[key].stop -- 0}})</span>
+                      </div>
+                    </div>
+                    <div class="row d-flex align-items-stretch" >
+                <div class="col-lg-3" ng-repeat="y in val">
+                  <div class="time_secn">
+                   <span >
+                        <label>Start Time:</label>
+                        <div ng-show="y.start_time	!= 0" class="time_inner">
+                        <!--img src="assets/images/calendar-color.png" width="13px" height="13px"-->
+                        {{y.first_update | date:'dd/MM/yyyy'}}
+                        <!--img src="assets/images/time-color.png" width="13px" height="13px"-->
+                        {{y.first_update | date:'hh:mm:ss a'}}
+                      </div>
+                       <div ng-show="y.start_time == 0" class="time_inner">
+                        <!--img src="assets/images/calendar-color.png" width="13px" height="13px"-->
+                        00-00-00
+                        <!--img src="assets/images/time-color.png" width="13px" height="13px"-->
+                        00:00:00 AM
+                      </div>
+                      </span>
+                      <div class="clearfix"></div>
+                      <span >
+                          <label>Last Update:</label>
+                          <div ng-show="y.last_update != 0" class="time_inner">
+                          <!--img src="assets/images/calendar-color.png" width="13px" height="13px"-->
+                          {{y.last_update | date:'dd/MM/yyyy'}}
+                          <!--img src="assets/images/time-color.png" width="13px" height="13px"-->
+                          {{y.last_update | date:'hh:mm:ss a'}}
+                        </div>
+                         <div ng-show="y.last_update == 0" class="time_inner">
+                          <!--img src="assets/images/calendar-color.png" width="13px" height="13px"-->
+                          00-00-00
+                          <!--img src="assets/images/time-color.png" width="13px" height="13px"-->
+                          00:00:00 AM
+                        </div>
+                        </span>  
+                        </div>  
+                  <div class="wrapper data-usage">
+                    <div class="wrapper_idle" ng-class="{running :y.status =='3' ,stopped :y.status=='0',idle : y.status == '1',nodata: y.status != '1' && y.status !='0' && y.status != '3'}">
+                      <h2 class="display h4">
+                        <a href="">{{y.machine_name}}</a>
+                      </h2>
+                      <div class="row d-flex align-items-center">
+                        <div class="col-sm-12">
+                          <percent-display percent="y.utilization" side="120" colors="#ede7f6 #A179C7" style="margin-left: 33%;"></percent-display>
+        
+                        </div>
+                        <!-- <div class="col-sm-12">
+                          <span style="height: 46px;" ng-show="y.job_name!=null" >
+                            <a style="cursor: none;" href="" >{{y.job_name}}11</a>
+                          </span>
+                        </div>
+                      
+                        <div class="col-sm-12" ng-show="y.job_name==null" >
+                          <span style="height: 46px;">
+                            <a>Not Available</a>
+                          </span>
+                        </div> -->
+                      </div>
+                    </div>
+                    <div class="row status_icon">
+                        <!-- <div class="col-md-12" data-toggle="modal" data-target="#exampleModalLabel5" ng-click="PartsCountModal(y.job_wise_part);modelshow=0" style="cursor:pointer; margin-bottom:10px;" >
+                              <strong>Parts Produced </strong>
+                            <div class="row" style="margin-top: 5px;">
+                            <div class="col-md-6" style="font-size: 14px; border-right: 1px solid #cdcdcd; padding-right: 11px;">
+                            <b style="color: #f6931e;">MD :</b> {{y.controller_part}}nos
+                             </div>
+                             <div class="col-md-6" style="font-size: 14px;">
+                                <b style="color: #f6931e;">C :</b> {{y.parts_count}}nos
+                            </div>
+                            </div>
+                            </div> -->
+                            <table class="table table-striped table_db">
+                               
+                                  <tr>
+                                      <td><i class="fa fa-angle-double-right"></i></td>
+                                      <td>Run Time</td>
+                                      <td>{{y.runtime}}</td>
+                                    </tr>
+    
+                              <tr>
+                                <td><i class="fa fa-angle-double-down"></i></td>
+                                <td>Down Time</td>
+                                <td>{{y.idletime}}</td>
+                              </tr>
+                             
+                                <tr>
+                                <td><i class="fa fa-hand-paper-o" style="font-size: 20px;"></i></td>
+                                <td>Stop Time</td>
+                                <td>{{y.stoptime}}</td>
+                              </tr>
+
+                              <tr>
+                                <td><i class="fa fa-clock-o"></i></td>
+                                <td>Total Time</td>
+                                <td>{{y.total}}</td>
+                              </tr>
+
+                             
+                            </table>
+                        <!-- <div class="col-md-6 status_first" data-toggle="modal" data-target="#exampleModalLabel4"
+                         ng-click="Downtime(y.total_load_unload_time,y.idle_time,y.downtime);modelshow=0 " style="cursor:pointer">
+                         <i class="fa fa-clock-o"></i>
+                          Downtime <br>{{y.downtime}}
+                        </div>
+                        <div class="col-md-6">
+                         <i class="fa fa-clock-o"></i>
+                         Cycletime <br>{{y.cycle_time}}
+                        </div> -->
+                        
+                      </div>
+                </div>
+              </div>
+              </div>
+        </div>
+      </section>
+    
+    
+    
+    
+    
+    <br>
+      
+    
+    <div class="modal fade" id="machine_details" tabindex="-1" role="dialog" aria-labelledby="machine_details" aria-hidden="true">
+        <div class="modal-dialog" role="document" ng-init="modelshow=0">
+          <div class="modal-content" >
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="loadStatus()">
+              <span aria-hidden="true"><i class="fa fa-times-circle" aria-hidden="true"></i>
+              </span>
+            </button>
+            <div class="modal-body machine-registration">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="wrapper data-usage">
+                    <div class="wrapper_idle" ng-class="{running :singleMachineRes.machine_status =='3' ,stopped :singleMachineRes.machine_status=='100',nodata: singleMachineRes.machine_status == null,idle : singleMachineRes.machine_status != '3' && singleMachineRes.machine_status !='100' && singleMachineRes.machine_status != null}">
+                      <h2 class="display h4">
+                          <!-- ng-click="machine_page_redirect1()" -->
+                        <a href="" ng-click="machine_page_redirect1()" onMouseOver="this.style.color='black'" onMouseOut="this.style.color='#fff'">{{singleMachineRes.machine_name}}</a>
+                      </h2>
+                      <div class="row"></div>
+                    
+                      <div class="row d-flex align-items-center">
+                        <div class="col-sm-12">
+                          <percent-display percent="singleMachineRes.utilization" side="220" colors="#ede7f6 #A179C7"></percent-display>
+                          <p>UTILIZATION</p>
+                        </div>
+                        <div class="col-sm-12 text-center">
+                          <span>{{singleMachineRes.job_name}}
+                          
+                          </span>
+                        </div>
+                      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <table class="table table-striped">
+    
+    
+                      <tr style="font-weight: 500">
+                          <td class="text-center">
+                            <i class="fa fa-clock-o"></i>
+                          </td>
+                          <td > Start Time</td>
+                          <td ng-show="singleMachineRes.day_start != 0">{{singleMachineRes.day_start | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+                          <td ng-show="singleMachineRes.day_start == 0">{{singleMachineRes.day_start | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+                        </tr>
+    
+                        <tr style="font-weight: 500">
+                            <td class="text-center">
+                              <i class="fa fa-clock-o"></i>
+                            </td>
+                            <td > Last Update Time</td>
+                            <td ng-show="singleMachineRes.last_update != 0">{{singleMachineRes.last_update | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+                            <td ng-show="singleMachineRes.last_update == 0">{{singleMachineRes.last_update | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+                          </tr>
+    
+                    <tr  ng-click="PartsCountModal(singleMachineRes.job_wise_part);modelshow = 1" >
+                      <td class="text-center">
+                        <i class="fa fa-cog"></i>
+                      </td>
+                      <!-- ng-click="PartsCountModal(singleMachineRes.job_wise_part)" style="cursor:pointer" -->
+                      <td  >Parts Produced</td>
+                      <td>MD :  {{singleMachineRes.controller_part}} Nos / C :{{singleMachineRes.parts_count}} Nos <i style="cursor:pointer;color: black;font-size: 18px;float: right;" class="fa fa-arrow-circle-right" aria-hidden="true"></i></td>
+                     
+                    </tr>
+                    <tr>
+                      <td class="text-center">
+                        <i class="fa fa-clock-o"></i>
+                      </td>
+                      <td >Cycletime</td>
+                      <td>{{singleMachineRes.cycle_time}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">
+                        <i class="fa fa-play"></i>
+                      </td>
+                      <td>Run Time</td>
+                      <td>{{singleMachineRes.total_run_time}}</td>
+                    </tr>
+                    <tr ng-click="Downtime(singleMachineRes.total_load_unload_time,singleMachineRes.idle_time,singleMachineRes.downtime);modelshow = 2">
+                      <td class="text-center">
+                        <i class="fa fa-sort-amount-asc "></i>
+                      </td>
+                      <td  style="cursor:pointer">Downtime</td>
+                      <td>{{singleMachineRes.downtime}} <i style="color: black;font-size: 18px;float: right;cursor:pointer" class="fa fa-arrow-circle-right" aria-hidden="true"></i></td>
+                    </tr>
+                    <!-- <tr>
+                    <td class="text-center"><i class="fa fa-pause"></i></td>
+                    <td>Idle Time</td>
+                    <td>{{singleMachineRes.downtime}}</td>
+                  </tr> -->
+                    <tr>
+                      <td class="text-center">
+                        <i class="fa fa-stop"></i>
+                      </td>
+                      <td>Stop Time</td>
+                      <td>{{singleMachineRes.total_stop_time}}</td>
+                    </tr>
+                  </table>
+                </div>
+    
+                    
+    
+    
+    
+    
+                <div class="col-md-7 target" ng-class="{show_pop : modelshow == 1}">
+                  <h2><span ng-click="modelshow = 0"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></span>Parts Produced</h2>
+                 
+                      <table>
+                        <tr>
+                          <td class="tdtitle">Program Number</td>
+                          <td class="tdtitle">PartsCount</td>
+                        </tr>
+                        <tr ng-repeat="x in Details">
+                          <td class="tdtable bg_grey">{{x.job_name}}</td>
+                          <td class="tdtable bg_grey">{{x.part_count}}</td>
+                        </tr>
+                      </table>
+                   
+                </div>
+    
+                <div class="col-md-7 target"  ng-class="{show_pop : modelshow == 2}">
+                    <h2><span ng-click="modelshow = 0"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></span>Downtime Details</h2>
+                   
+                    <table>
+                        <tr>
+                          <td class="tdtitle bg_grey">Possible Load & Unload Time</td>
+                          <td class="tdtable bg_grey">{{totalloadunloadtime}}</td>
+            
+                        </tr>
+                        <tr>
+                          <td class="tdtitle">Idle</td>
+                          <td class="tdtable">{{idletime}}</td>
+                        </tr>
+                        <tr>
+                          <td class="tdtitle bg_grey">Total</td>
+                          <td class="tdtable bg_grey">{{downtime}}</td>
+                        </tr>
+            
+                      </table>
+                     
+                  </div>
+    
+    
+    
+    
+    
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    
+    
+    
+    
+    
+    
+     
+    
+    
+    
+      <div class="modal fade" id="exampleModalLabel5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel5" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel5">Parts Produced</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body machine-registration">
+                        <table>
+                     <tr>
+                        <td class="tdtitle">JobID</td>
+                        <td class="tdtitle">PartsCount</td>
+                     </tr>
+                     <tr ng-repeat="x in Details">
+                       <td class="tdtable bg_grey">{{x.job_name}}</td>
+                       <td class="tdtable bg_grey">{{x.part_count}}</td>                    
+                     </tr>          
+                  </table>
+                </div>
+            </div>
+        </div>
+     </div>
+    
+    
+           
+    
+            <div ng-include="'footer.html'"></div>
+     </div>
+    

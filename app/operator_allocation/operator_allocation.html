@@ -1,0 +1,369 @@
+<style type="text/css">
+
+  /* .th_op_name {
+      width: 10%;
+  }
+  .th_op_id {
+      width: 10%;
+  }
+  .th_mch_name {
+      width: 15%;
+  }
+  .th_mch_id {
+      width: 15%;
+  }
+  .th_shift {
+      width: 5%;
+  }
+  .th_shifttime {
+      width: 15%;
+  }
+  .th_job {
+      width: 15%;
+  }
+  .th_from {
+      width: 15%;
+  }
+.th_created {
+      width: 15%;
+  }
+  .th_action {
+      width: 5%;
+  } */
+   
+
+  .head-align tr th{
+    vertical-align: middle;
+    border-bottom: none;
+  }
+
+  .card-collapse{
+    cursor: pointer;
+  }
+
+  .card-collapse thead:hover{
+    background-color: #a2a2a2;
+    color: #fff;
+  }
+
+  .card-collapse thead:hover tr th{
+    font-weight: bold;
+  }  
+
+  .card-collapse thead a:hover i{
+    color: #444;
+  } 
+
+  .card-collapse a:hover i{
+    color: #f59119;
+  }  
+
+  .card-collapse.active{
+    -webkit-box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.3);
+    box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.3);
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  .card-collapse thead{
+    color: #666;
+/*    background-color: #dcdcdc;*/
+  }
+
+  .card-collapse thead tr th{
+    font-weight: normal;
+  }
+
+  .card-collapse.active thead tr th{
+    font-weight: bold;
+  }
+
+  .card-collapse.active thead{
+    color: #fff;
+    background-color: #a2a2a2;
+  }
+
+  .table-header thead tr th {
+    border-bottom: 2px solid #dedada;
+    font-size: 16px;
+  }
+  .active tr.firsttr{
+    background: #c3c3c3!important;
+    font-weight: bold;
+  }
+
+</style>
+
+<div ng-include="'sidebar.html'"></div>
+<div class="page home-page">
+  <div ng-include="'header.html'"></div>
+
+  <div ng-show="myLoader" class="spinner">
+      <img src="assets/images/spinner.gif" class="myspin">
+    </div>
+  
+   
+  <section class="statistics section-padding section_top" ng-init="clientinit()">
+    <div class="container-fluid">
+     
+        <header>
+            <h1 class="h3 display "><i class="fa fa-laptop"></i>Operator Allocation 
+              <a href="" ng-hide="role_Setup == 'operator'" class="btn_add" data-toggle="modal" data-target="#exampleModalLabel" ng-click="cleandata()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+            </h1>
+         
+                          <h1 class="h3 display table_h1">
+                            
+                          </h1>
+                    <div class="table_search" style="margin: 4px;">
+                      <input ng-model="q" id="search" class="form-control" ng-click="currentPage = 0" placeholder="Search">
+                  </div>
+
+                </header>
+
+
+
+
+      <div class="clearfix"></div>
+      <div class="card">
+         
+          <div class="card-block tablescroll">
+
+      <div class="card card-collapse" ></div>
+        <table class="table table-striped head-align" style="margin-bottom: 0;">
+            <thead>
+                <tr>
+                  <th>#</th>
+                  <th class="th_op_name">Operator Name</th>
+                  <th class="th_op_id">Operator ID</th>
+                  <th class="th_mch_name">Machine Name</th>
+                  <th class="th_mch_id">Machine ID</th>
+                  <th class="th_shift">Shift</th>
+                  <th class="th_shifttime">Shift Time</th>
+                  <th class="th_job">Job Description</th>
+                  <th class="th_from">From-To Date</th>
+                  <th class="th_created">Created</th>
+                  <th ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'" class="th_action">Action</th>
+                </tr>
+              </thead>
+          <thead>
+            
+          </thead>
+            <tbody  class="card-collapse" ng-repeat="operator in operator_alls | filter:q | startFrom:currentPage*pageSize | limitTo:pageSize" ng-click="alocate(operator.id)" ng-class="{'active': operator.id == subid && IsVisible }">
+
+                <tr class="firsttr">
+                    <td>{{currentPage * pageSize + $index + 1}}</td>
+                    <td class="th_op_name">{{ operator.operator.operator_name}}</td>
+                    <td class="th_op_id">{{ operator.operator.operator_spec_id}}</td>
+                    <td class="th_mch_name">{{ operator.machine.machine_name}}</td>
+                    <td class="th_mch_id">{{ operator.machine.machine_type}}</td>
+                    <td class="th_shift">{{operator.shifttransaction.shift_no}}</td>
+                    <td class="th_shifttime">{{operator.shifttransaction.shift_start_time}} - {{operator.shifttransaction.shift_end_time}}</td>
+                    <td class="th_job">{{ operator.description }}</td>
+                    <td class="th_from">({{ operator.from_date  | date:'dd-MM-yyyy'}}) - ({{ operator.to_date | date:'dd-MM-yyyy'}})</td>
+                    <td class="th_created">{{ operator.created_at }}</td>
+                    <td class="th_action">
+                      <a ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'" class="remove"> <i class="fa fa-trash-o " confirmed-click="delete(operator.id)" ng-confirm-click="Do you want to delete"></i></a>
+                    </td>
+                  </tr>
+
+                
+
+              <tr ng-if="operator.id == subid" ng-show="IsVisible" ng-repeat="operator1 in operator.operator_mapping_allocations">
+                  <td>{{$index + 1}}</td>
+                <td>{{ operator1.operator.operator_name}}</td>
+                <td>{{ operator1.operator.operator_spec_id}}</td>
+                <td>{{ operator.machine.machine_name}}</td>
+                <td>{{ operator.machine.machine_type}}</td>
+                <td>{{operator.shifttransaction.shift_no}}</td>
+                <td>{{operator.shifttransaction.shift_start_time}} - {{operator.shifttransaction.shift_end_time}}</td>
+                <td>{{ operator.description }}</td>
+                <td>{{ operator1.date | date:'dd-MM-yyyy'}}</td>
+                <td>{{ operator1.created_at }}</td>
+                <td>
+                 <a ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'" class="edit" data-toggle="modal"  ng-show="{{todaydat | date: 'yyyy-MM-dd'}} >= {{operator1.date}}" data-target="#exampleModalLabel" title="Edit" ng-click="edit(operator.id,operator1)"> <i class="fa fa-pencil"></i> </a>
+                </td>
+              </tr>
+            </tbody>          
+        </table>
+
+        <div>
+          <div class="pagination_left">Page {{currentPage+1}} of {{numberOfPages()}}</div>
+          <div class="pagination_right">
+              <ul class="pagination pagination">
+                  <li class="page-item">
+                      <button class="page-link" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">&laquo; </button>
+                  </li>
+                  <li class="page-item">
+                      <button class="page-link" ng-disabled="currentPage >= getData().length/pageSize - 1"
+                          ng-click="currentPage=currentPage+1">&raquo;</button>
+                  </li>
+              </ul>
+          </div>
+      </div>
+
+      </div>
+      </div>
+      </div>
+  </section>
+
+
+
+
+
+   
+
+  <!-- modal -->
+  <div class="modal fade" id="exampleModalLabel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Operator Registration</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body machine-registration">
+          <form name="operatorall">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Machine</label>
+                  <div class="select">
+                    <select name="account" ng-disabled="alloedit == 1" class="form-control" ng-options="mc.id as mc.machine_name for mc in operatormachines" ng-model="operatorassignregistration.machine_id" class="btn btn-default select-width selectpicker form-control">
+                      <option value="">Select Machine</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Operator</label>
+                  <div class="select">
+                    <select name="account" class="form-control" ng-options="operator.id as operator.operator_name for operator in operators" ng-model="operatorassignregistration.operator_id" class="btn btn-default select-width selectpicker form-control">
+                      <option value="">Select Operator</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!--div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Shift</label>
+                  <div class="select">
+                    <select name="account" ng-disabled="alloedit == 1" class="form-control" ng-options="sh.id as sh.shift_no for sh in shiftstransfordrop1" ng-model="operatorassignregistration.shifttransaction_id" class="btn btn-default select-width selectpicker form-control">
+                      <option value="" ng-disabled="alloedit == 1">Select Shift</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div-->
+     
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Shift</label>
+                  <div class="select" ng-show="shiftvalueedit == null">
+                    <select name="account" ng-disabled="alloedit == 1" class="form-control"  ng-model="operatorassignregistration.shifttransaction_id" class="btn btn-default select-width selectpicker form-control">
+                      <option  value="">Select Shift</option>
+                      <option ng-repeat="sh in shiftstransfordrop1" value="{{sh.id}}">{{sh.shift_no}} ({{sh.shift_start_time}}-{{sh.shift_end_time}})</option>
+                    </select>
+
+                  </div>
+                  <div ng-show="shiftvalueedit != null">
+                  <input type="text" ng-readonly="alloedit == 1" class="form-control" ng-model="shiftvalueedit">
+                </div>
+                </div>
+              </div>
+            </div>
+
+            <!--div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Description</label>
+                  <div class="input-group">
+                    <input type="text" ng-readonly="alloedit == 1" class="form-control" ng-model="operatorassignregistration.description">
+                  </div>
+                </div>
+              </div>
+            </div-->
+             <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Description</label>
+                  <div class="select" >
+                    <!-- <input type="text" ng-readonly="alloedit == 1" class="form-control" ng-model="operatorassignregistration.description"> -->
+                    <select  class="form-control" ng-model="operatorassignregistration.description"  class="btn btn-default select-width selectpicker form-control" >
+                      <option value="" style="display:true">---Select---</option>
+                      <option value="Turning Center Operator">Turning Center Operator</option>
+                      <option value="VMC Operator">VMC Operator</option>
+                      <option value="HMC Operator">HMC Operator</option>
+                      <option value="VTL Operator">VTL Operator</option>
+                      <option value="Turning Center Programmer">Turning Center Programmer</option>
+                      <option value="VMC Programmer">VMC Programmer</option>
+                      <option value="HMC Programmer">HMC Programmer</option>
+                      <option value="VTL Programmer">VTL Programmer</option>
+                      <option value="Turning Center Setter">Turning Center Setter</option>
+                      <option value="VMC Setter">VMC Setter</option>
+                      <option value="HMC Setter">HMC Setter</option>
+                      <option value="VTL Setter">VTL Setter</option>
+                      </select>
+                    </div>
+                      <!--div ng-show="shiftvalueedit != null">
+                        <input type="text" ng-readonly="alloedit == 1" class="form-control" ng-model="operatorassignregistration.description">
+                      </div-->
+                  
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" moment-picker="operatorassignregistration.from_date" ng-show="alloedit == 0" format="YYYY-MM-DD" min-date="startDate">
+                  <label>From Date</label>
+                  <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    <input type="text" ng-disabled="alloedit == 1" class="form-control" ng-readonly="alloedit == 1" ng-model="operatorassignregistration.from_date" max-date="operatorassignregistration.from_date">
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" ng-show="alloedit == 0" moment-picker="operatorassignregistration.to_date" format="YYYY-MM-DD" min-date="operatorassignregistration.from_date">
+                  <label>To Date</label>
+                  <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    <input type="text" ng-disabled="alloedit == 1" class="form-control" ng-required="true" ng-model="operatorassignregistration.to_date">
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-md-6">
+                <div class="form-group" ng-show="alloedit == 1" ng-disabled="alloedit == 1" moment-picker="edit_date" format="YYYY-MM-DD">
+                  <label>Date</label>
+                  <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    <input type="text" ng-disabled="alloedit == 1" class="form-control"  ng-model="edit_date">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" ng-disabled="operatorall.$invalid" ng-click="operatorForm()" data-dismiss="modal">Save</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-include="'footer.html'"></div>
+  </div>

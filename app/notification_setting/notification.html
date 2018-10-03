@@ -1,0 +1,203 @@
+<style>
+    .alrm_card {
+        margin: 9px 10px;
+    }
+
+    .alrm_card .row {
+        display: block !important;
+    }
+
+    .alrm_card h1 {
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+
+    .alrm_card span {
+        color: #f69222;
+        padding-right: 5px;
+    }
+
+    .alrm_switch {
+        position: absolute;
+        right: 10px;
+        margin-top: 9px;
+    }
+
+    .alrm_switch .item {
+        padding: 30px 40px;
+        background: none;
+
+    }
+
+    .edit_time {
+        background: #f69222;
+        border: none;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .switch_holder .switch {
+        position: relative;
+        display: inline-block;
+        width: 53px;
+        height: 25px;
+        /* margin: 10px; */
+        float: right;
+    }
+
+    .switch_holder .switch input {
+        display: none;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked+.slider {
+        background-color: #4cd964;
+    }
+
+    input:focus+.slider {
+        box-shadow: 0 0 1px #4cd964;
+    }
+
+    input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+    section.statistics p {
+    font-size:17px;
+    margin-bottom: 5px !important;
+    color: #f7941f;
+    }
+    .switch_holder{
+        border-top: 1px solid #ddd;
+        margin-top: 20px;
+        padding: 10px 0;
+        margin-bottom: 15px;
+    }
+    .switch_holder p{
+        float: left;
+        line-height:25px;
+        color: #838383!important;
+        font-size: 11px!important;
+    }
+    span.reason{
+        color: #f7941f;
+    }
+    .machine_register_wrapper{
+        margin-bottom: 30px!important;
+    }
+</style>
+<div ng-include="'sidebar.html'"></div>
+<div class="page home-page">
+    <div ng-include="'header.html'"></div>
+
+    <section class="statistics section-padding section-no-padding-bottom section_top" >
+    <!-- <div class="row">
+            <div class="col-lg-2 card alrm_card" ng-repeat="alrm in setalarmgetRes" >
+   
+
+        <div class="row item-divider">
+           
+                <div class="alrm_switch">
+                  
+                    <label class="switch">
+                        <input type="checkbox" ng-model="alrm.active" ng-true-value="true" ng-false-value="false" ng-change="setStatus(alrm.active,alrm.id,alrm.time_interval);alrm.time_interval ? alrm.active=true : alrm.active=false">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <h1>{{alrm.machine.machine_name}}</h1>
+                <select ng-show="setshow1 == 4" ng-model="alrm.time_interval" ng-change="setsave(alrm);setshow1=0">
+                    <option value="">---Select---</option>
+                    <option ng-repeat="val in times">{{val}}</option>
+                </select>
+                <span ng-hide="setshow1 == 4">{{alrm.time_interval}}</span>
+                <span>Mins /&nbsp;{{alrm.alarm_for}}</span>
+                <button class="edit_time" style="border: none;color: white;" ng-click="setshow1 =4">Edit</button>
+            </div>
+           
+        
+    
+    </div>
+    </div> -->
+    <div class="container-fluid">
+    <header>
+
+            <div ng-show="myLoader" class="spinner">
+                <img src="assets/images/spinner.gif" class="myspin">
+            </div>
+                <h1 class="h3 display machinereg"><i class="fa fa-desktop" aria-hidden="true"></i> Notification Setting <a ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'" class="btn_add" data-toggle="modal" data-target="#machine"></a></h1>
+            </header>
+
+   
+      
+    <div class="row d-flex align-items-stretch">
+            <div class="col-lg-3" ng-repeat="alrm in setalarmgetRes" >
+            <div class="card machine_register_wrapper">
+              <!-- Monthly Usage-->
+              <div class="feed">
+                          <div class="feed-body machine_register">
+                            <div class="content">
+                              <div class="machine_edits">
+                              <div class="edit"></div>
+                              <div class="delete" ><i class="fa fa-pencil-square-o" aria-hidden="true" ng-click="setshow1=4"></i> </div>
+                              <div class="count">{{$index + 1}}</div>
+                              
+                              </div>
+                              <h2>{{alrm.machine.machine_name}}</h2>
+                              <h4></h4>
+                              <div class="full-date">
+                              <p><span>Time Interval: </span> <span  ng-hide="setshow1 == 4">{{alrm.time_interval}} </span>  <select ng-show="setshow1 == 4" ng-model="alrm.time_interval" ng-change="setsave(alrm);setshow1=0">
+                                    <option value="">---Select---</option>
+                                    <option ng-repeat="val in times">{{val}}</option>
+                                </select></p>
+                              <p><span>Reason : </span> {{alrm.alarm_for}}</p></div>
+                              <div class="switch_holder"><p>Enable/ Disable Notification</p>  
+                                <label class="switch">
+                                 
+                                        <input type="checkbox" ng-model="alrm.active" ng-true-value="true" ng-false-value="false" ng-change="setStatus(alrm.active,alrm.id,alrm.time_interval);alrm.time_interval ? alrm.active=true : alrm.active=false">
+                                          <span class="slider round"></span>
+                                      </label>
+                            </div>
+                             
+                            </div>
+                          </div>
+                        </div>
+              </div>
+            </div>
+</div>
+</section>
+    <div ng-include="'footer.html'"></div>
+</div>

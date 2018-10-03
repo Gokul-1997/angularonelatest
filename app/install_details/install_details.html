@@ -1,0 +1,186 @@
+<div ng-include="'adminsidebar.html'"></div>
+<div class="page home-page">
+    <div ng-include="'header.html'"></div>
+    <section class="statistics section-padding section_top" ng-init="tenantinit()">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <header>
+                        <!-- <div ng-show="myLoader" class="spinner">
+                            <img src="assets/images/spinner.gif" class="myspin">
+                        </div> -->
+                        <h1 class="h3 display">
+                            <i class="fa fa-info"></i>Install Details
+                        </h1>
+                    </header>
+                    <div class="card">
+                        <div class="card-block tablescroll">
+                            <table class="table table-striped table-sm table_front">
+                                <thead>
+                                    <tr>
+                                        <th>Company Name</th>
+                                        <th>RS232 Total</th>
+                                        <th>Rj45 Total</th>
+                                        <th>Total Machine</th>
+                                        <th>Machines Installed</th>
+                                        <th>Machine Removed</th>
+                                        <th>Installed Date</th>
+                                        <th>Remarks</th>
+                                        <th>Action</th>
+                                        <th>Payment Type</th>    
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr ng-repeat="new in tenant">
+                                       
+                                        <td>{{ new.tenant_name }}</td>
+                                        <td>{{new.rs_total}}</td>
+                                        <td>{{new.rj_total}}</td>
+                                        <td>{{new.total_machine}}</td>
+                                        <td ng-if="new.machines_installed != null">{{new.machines_installed}}</td>
+                                        <td ng-if="new.machines_installed == null">-</td>
+                                        <td ng-if="new.removed !=null">{{new.removed}}</td>
+                                        <td ng-if="new.removed==null">-</td>
+                                        <td ng-if="new.installed_date !=null">{{new.installed_date | date:'dd-MM-yyyy' }}</td>
+                                        <td ng-if="new.installed_date==null">-</td>
+                                        <td ng-if="new.remarks != null">{{new.remarks}}</td>
+                                        <td ng-if="new.remarks== null">-</td>
+                                        <td>
+                                            <ul class="item-actions-list">
+
+
+                                                <li>
+                                                    <a class="edit" data-toggle="modal" data-target="#exampleModalLabel1" title="Edit" ng-click="edit(new.id)">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                </li>
+                                                
+                                            </ul>
+                                        </td>
+                                        <td>
+                                             <ul class="item-actions-list">
+
+                                            <li>
+                                                 <a ng-if="new.is_tenant == true" ng-click="tenantid(new.tenant_id,new.tenant_name)">
+                                                        <i class="fa fa-info"></i>
+                                                    </a> 
+                                                 
+                                                </li>
+                                            </ul>
+                                        </td>
+
+
+
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<style>
+  th{
+    text-align: center;
+  }
+  td{
+    text-align: center;
+  }
+  
+</style>
+
+
+
+
+<div class="modal fade" id="exampleModalLabel1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Registration</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body machine-registration">
+                <form name="client">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Total Machine Install</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ng-model="savedetails.machines_installed" placeholder="Total Machine" ng-Required="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Machine Remove </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ng-model="savedetails.removed" placeholder="Machine Remove" ng-Required="true">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-md-6">
+                            <div class="form-group" moment-picker="savedetails.installed_date" format="YYYY-MM-DD">
+                                <label>Install Date</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </span>
+                                    <input type="text" class="form-control" ng-Required="true" ng-model="savedetails.installed_date">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 
+                           <div class="col-md-6">
+                                <div class="form-group" moment-picker="from_date"  format="YYYY-MM-DD" max-date="momentToday">
+                                    <label>Install Date</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="savedetails.installed_date" placeholder="First Name" ng-Required="true">
+                                    </div>
+                                </div>
+                            </div> -->
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Remark</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ng-model="savedetails.remarks" placeholder="Remark" ng-Required="true">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+
+
+
+
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="save()" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,164 @@
+
+<div ng-include="'sidebar.html'"></div>
+   <div class="page home-page">     
+   <div ng-include="'header.html'"></div>
+
+
+   <section class="statistics section-padding section-no-padding-bottom section_top">
+            <div class="container-fluid">
+                <header>
+
+            <div ng-show="myLoader" class="spinner">
+                <img src="assets/images/spinner.gif" class="myspin">
+            </div>
+
+                    <h1 class="h3 display reprttop"><i class="fa fa-laptop"></i>Export
+              <a href="" class="btn_top" ng-click="exportData()"><i class="fa fa-share-square-o" aria-hidden="true"></i>Export</a>
+              </h1>
+                </header>
+
+                <div class="card card_status">
+                    <div class="card-block">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label>Select Machine</label>
+                                        <div class="select">
+                                            <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in allmachines" ng-model="MachineID" ng-change="checkingmachineid()">
+                                                <option value="">ALL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           <!--  <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label>Select Type</label>
+                                        <div class="select">
+                                        <select class="form-control" ng-model="types" ng-Required="true" ng-change="mychange(types)" ng-options="val for (key , val) in typewise">
+                                        <option value="">Select type</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             
+ -->
+                           
+
+                            <div class="col-md-2">
+                                <div class="form-group" moment-picker="from_date"  format="YYYY-MM-DD">
+                                    <label>From Date</label>
+                                    <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" ng-Required="true" ng-model="from_date" max-date="from_date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group" moment-picker="to_date"  format="YYYY-MM-DD"  min-date="to_date">
+                                    <label>To Date</label>
+                                    <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" ng-Required="true" ng-model="to_date">
+                                    </div>
+                                </div>
+                            </div>
+
+                             <div class="col-md-3" ng-show="wise=='Shiftwise'">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label>Select Shift</label>
+                                        <div class="select">
+                                            <select name="account" class="form-control" ng-options="sh.id as sh.shift_no for sh in shiftstransfordrop" ng-model="ShiftID" ng-change="checkingshiftid()">
+                                                <option value="">ALL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2"> 
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <button class="btn btn-success btn_report" ng-click="generate_export()" ng-disabled="isdisabled"><i class="fa fa-eye" aria-hidden="true"></i> View Export</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+
+          
+         
+         <!-- Updates Section -->
+        <section class="updates">
+            <div class="container-fluid">
+                <div class="row">
+                   
+                    <div class="col-lg-12">
+                        <div class="card bar-chart-example">
+                            <div class="card-block table_overflow" id="exportable">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Machine Name</th>
+                                            <th>Parts Count</th>
+                                            <th>Parts Count Consolidated</th>
+                                            <th>Program No</th>
+                                            <th>Machine Status</th>
+                                            <th>Day</th>
+                                            <th>Month</th>
+                                            <th>Year</th>
+                                            <th>Shift</th>
+                                            <th>Total Run Time</th>                                          
+                                            <th>Total Run Second</th>
+                                            <th>Cons Total Run Time</th>
+                                            <th>Cutting Time</th>
+                                            <th>Cons Cutting Time</th>
+                                            <th>Cycle Time</th>
+                                            <th>Run Time</th>
+                                            <th>Cons Run Time</th>
+                                            <th>Cons Down Time</th>
+                                            <th>Created Time</th>
+                                            <th>Total Available Time</th>
+                                            <th>Cons Load Unload Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-repeat="item in itemexport">
+                                        <tr ng-click="showme=true">
+                                            <td>{{item.machine_name}}</td>
+                                            <td>{{item.parts_count}}</td>
+                                            <td>{{item.parts_count_consolidated}}</td>
+                                            <td>{{item.programe_number}}</td>
+                                            <td>{{item.machine_status}}</td>
+                                            <td>{{item.day}}</td>
+                                            <td>{{item.month}}</td>
+                                            <td>{{item.year}}</td>
+                                            <td>{{item.shift}}</td>
+                                            <td>{{item.total_run_time}}</td>                                          
+                                            <td>{{item.total_run_second}}</td>
+                                            <td>{{item.cons_total_run_time}}</td>
+                                            <td>{{item.cutting_time}}</td>
+                                            <td>{{item.cons_cutting_time}}</td>
+                                            <td>{{item.cycle_time}}</td> 
+                                            <td>{{item.run_time}}</td>
+                                            <td>{{item.cons_run_time}}</td>
+                                            <td>{{item.cons_down_time}}</td>
+                                            <td>{{item.created_time}}</td>
+                                            <td>{{item.total_available_time}}</td>
+                                            <td>{{item.cons_load_unload_time}}</td>                                          
+                                        </tr>                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+ <div ng-include="'footer.html'"></div>
+ </div>

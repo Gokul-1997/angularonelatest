@@ -1,0 +1,104 @@
+
+<!-- Side Navbar -->
+<nav class="side-navbar">
+  <div class="side-navbar-wrapper">
+    <div class="sidenav-header d-flex align-items-center justify-content-center">
+      <img src="assets/images/logo.jpg" alt="person">
+    </div>
+    <div class="main-menu">
+      <ul id="side-main-menu" class="side-menu list-unstyled">        
+       
+          <li> <a href="" ng-click="pageverification('/#!/frontpage')"><i class="fa fa-home" aria-hidden="true"></i><span>Home</span></a></li>
+
+        <li  ng-class="{activebar:sidepath=='dashboard'}"><a href="" ng-click="pageverification('/#!/dashboard')"><i class="fa fa-th-large" aria-hidden="true" ></i><span>Dashboard</span></a></li>
+        <li  ng-class="{activebar:sidepath=='conventional'}"><a href="" ng-click="pageverification('/#!/conventional')"><i class="fa fa-newspaper-o" aria-hidden="true" ></i><span>Conventional</span></a></li>
+        <!--li> <a href="" ng-click="pageverification('/#!/maintanance')"> <i class="fa fa-cog" aria-hidden="true"></i><span>Maintenance</span></a></li-->
+        <li  > <a style="cursor: not-allowed; background: #393836;" href="" ><i class="fa fa-cog" ></i><span>Maintenance <span class="badge badge-danger" style="border-radius: 5px; padding: 5px;">Feature...</span></a>
+       </span></a></li>
+
+        <li ng-class="{activebar:sidepath=='alarms'}"> <a href="" ng-click="pageverification('/#!/alarms')"><i class="fa fa-bell-o" aria-hidden="true"></i><span>Alarms</span></a></li>
+
+        <li ng-class="{activebar:sidepath=='alert'}"> <a href="" ng-click="pageverification('/#!/alert')"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i><span>Alerts</span></a></li>
+         
+        <li ng-class="{activebar:sidepath=='alarmsreport'}"> <a href="" ng-click="pageverification('/#!/alarmsreport')"><i class="fa fa-folder-open-o" aria-hidden="true"></i><span>Alarms Report</span></a></li>
+        <li ng-class="{activebar:sidepath=='connectionlog'}"><a href="" ng-click="pageverification('/#!/connectionlog')"><i class="fa fa-history" aria-hidden="true"></i><span>Log</span></a></li>
+
+        <!--li> <a href="" ng-click="pageverification('/#!/operator')"><i class="fa fa-address-card-o" aria-hidden="true"></i><span>Operator Entry</span></a></li-->
+        <li > <a style="cursor: not-allowed; background: #393836;" href="" ><i class="fa fa-address-card-o" ></i><span>Operator Entry <span class="badge badge-danger" style="border-radius: 5px; padding: 5px;">Feature...</span></a>
+       </span></a></li>
+
+        <!--li><a href="" ng-click="pageverification('/#!/report')"><i class="fa fa-file" aria-hidden="true"></i><span>Report</span></a></li-->
+         <li ng-class="{activebar:sidepath=='report'}"><a href="" ng-click="pageverification('/#!/report')"><i class="fa fa-file-text-o" aria-hidden="true"></i><span>Report</span></a></li>
+
+         <li ng-class="{activebar:sidepath=='conventionalreport'}"><a href="" ng-click="pageverification('/#!/conventionalreport')"><i class="fa fa-file-text-o" aria-hidden="true"></i><span>Conventional Report</span></a></li>
+
+       
+        <!-- <li> <a style="cursor: not-allowed; background: #393836;" href="" ><i class="fa fa-arrow-circle-o-up" ></i><span>Export <span class="badge badge-danger" style="border-radius: 5px; padding: 5px;">Feature...</span></a>
+       </span></a></li> -->
+
+       <li ng-class="{activebar:sidepath=='statuschart'}"><a href="" ng-click="pageverification('/#!/statuschart')"><i class="fa fa-bar-chart" aria-hidden="true"></i><span>Charts</span></a></li>
+
+       <li ng-class="{activebar:sidepath=='cyclestart'}"><a href="" ng-click="pageverification('/#!/cyclestart')"><i class="fa fa-line-chart" aria-hidden="true"></i><span>Cycle Start Chart</span></a></li>
+
+       <li ng-class="{activebar:sidepath=='notification'}"><a href="" ng-click="pageverification('/#!/notification')"><i class="fa fa-wrench" aria-hidden="true"></i><span>Notification Setting</span></a></li>
+        <li > <a href="" ng-click="masterShow = !masterShow;"><i class="fa fa-list-alt" aria-hidden="true"></i><span>Masters</span>
+          <div class="arrow rotate pull-right"><i ng-class="{'fa fa-angle-right':masterShow == false,'fa fa-angle-down' : masterShow == true}"></i></div></a>
+        
+          <br>
+          <ul  ng-show="masterShow == true" class="list-unstyled">
+            <li ng-class="{activebar:sidepath=='machine_registration'}"> <a href="" ng-click="pageverification('/#!/machine_registration')"><i class="fa fa-desktop" aria-hidden="true"></i><span>Machine
+            </span></a></li>
+            <li ng-class="{activebar:sidepath=='shift_registration'}"> <a href="" ng-click="pageverification('/#!/shift_registration')"><i class="fa fa-clock-o" aria-hidden="true"></i><span>Shift</span></a></li>
+            <li ng-class="{activebar:sidepath=='client'}"> <a href="" ng-click="pageverification('/#!/client')"><i class="fa fa-users" aria-hidden="true"></i><span>Client<span></a></li>
+            <li ng-class="{activebar:sidepath=='job_registration'}"> <a href="" ng-click="pageverification('/#!/job_registration')"><i class="fa fa-handshake-o" aria-hidden="true"></i><span>Job</span></a></li>
+            <li ng-class="{activebar:sidepath=='usermanagement'}"> <a href="" ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'" ng-click="pageverification('/#!/usermanagement')"><i class="fa fa-user-o" aria-hidden="true"></i><span>User</span></a></li>
+            <li ng-class="{activebar:sidepath=='operator_masters'}"> <a href="" ng-click="pageverification('/#!/operator_masters')"><i class="fa fa-user-circle-o" aria-hidden="true"></i><span>Operator</span></a></li>
+            <li ng-class="{activebar:sidepath=='operator_allocation_masters'}"> <a href="" ng-click="pageverification('/#!/operator_allocation_masters')"><i class="fa fa-user-plus" aria-hidden="true"></i>
+            <span>Operator Allocation</span></a></li>
+            <!--li> <a href="" ng-click="pageverification('/#!/rolecreation')"><i class="fa fa-user-o" aria-hidden="true"></i> Roles</a></li-->
+            <br>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<script type="text/javascript">
+//   $(function () {
+
+//   $('#sidebar-menu, #customize-menu').metisMenu({
+//     activeClass: 'open'
+//   });
+
+
+//   $('#sidebar-collapse-btn').on('click', function(event){
+//     event.preventDefault();
+
+//     $("#app").toggleClass("sidebar-open");
+//   });
+
+//   $("#sidebar-overlay").on('click', function() {
+//     $("#app").removeClass("sidebar-open");
+//   });
+
+// });
+
+// $(document).ready(function(){
+//       $("#flip").click(function(){
+//           $("#panel").slideToggle("fast");
+//           $("#flip").toggleClass("open");
+//       });
+// })  
+</script>
+
+<style type="text/css">
+/* nav.side-navbar   li.open  a .arrow i{
+transform: rotate(90deg);
+} */
+
+.activebar{
+background-color:#f7941d;
+}
+</style>

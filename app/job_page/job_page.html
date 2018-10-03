@@ -1,0 +1,114 @@
+         <div ng-include="'sidebar.html'"></div>
+   <div class="page home-page">     
+   <div ng-include="'header.html'"></div>
+
+<section class="statistics section-padding section-no-padding-bottom section_top">
+                  <div class="container-fluid">
+                    <header> 
+                      <h1 class="h3 display"><i class="fa fa-laptop"></i>Job Status
+                        <a href="index.html" class="btn_top"><i class="fa fa-desktop" aria-hidden="true"></i>Dashboard</a>
+                      </h1>
+                    </header>
+                    <div class="card card_status">
+                      <div class="card-block">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <div class="form-group">
+                                <label>Select Filter</label>
+                                <div class="select">
+                                  <select name="account" class="form-control" ng-options="fj[0] as fj[1] for fj in [[0,'Completed'],[1,'In Progress'],[2,'To be started']]" ng-model="Filter_job" ng-change="FilteringjobID()">
+                                    <option value="">select filter</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <div class="form-group">
+                                <label>Select Job</label>
+                                <div class="select">
+                                  <select name="account" class="form-control" ng-options="jb.id as jb.description for jb in alljobs" ng-model="JoBID" ng-change="checkingjobID()">
+                                     <option value="">select job</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                  <!-- Updates Section -->
+                  <section class="updates">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-lg-3">
+                          <div class="card">
+                           <div class="card-header d-flex align-items-center">
+                            <h2 class="h5 display">Job Status</h2>
+                          </div>
+                          <div class="card-block status_card">
+                            <div class="wrapper data-usage">
+                              <div class="pie-chart-example">
+                                <div class="feed">
+                                  <table class="table table-striped">
+                                    <tr>
+                                      <td class="date_table">Job Start Date</td>
+                                      <td>{{jobdetails.job_detail.job_start_date}}</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="date_table">Job End Date</td>
+                                      <td>{{jobdetails.job_detail.job_due_date}}</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="date_table">Actual Completeion Date</td>
+                                      <td>{{jobdetails.job_detail.job_due_date}}</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="date_table">Ordered Quantity</td>
+                                      <td>{{jobdetails.job_detail.order_quantity}}  </td>
+                                    </tr>
+                                  </table>
+                                </div>
+                                
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Daily Feed-->
+                      <div class="col-lg-6">
+                        <div class="card bar-chart-example">
+                          <div class="card-header d-flex align-items-center">
+                            <h2 class="h5 display">Job Performace Status</h2>
+                          </div>
+                          <div class="card-block">
+                            <canvas id="operationChart"></canvas>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3">
+                        <div class="card">
+                          <div class="card-header d-flex align-items-center">
+                            <h2 class="h5 display">Output</h2>
+                          </div>
+                          <div class="card-block">
+                            <ul class="status_list output_table">
+                              <li>Parts produced<span class="badge badge-warning">{{jobdetails.parts_produced}}</span></li>
+                              <li>Rejects<span class="badge badge-warning">{{jobdetails.parts_rework}}</span></li>
+                              <li>Rework<span class="badge badge-warning">{{jobdetails.parts_rework}}</span></li>
+                              <li>Inspection<span class="badge badge-warning">
+                              {{jobdetails.fiq}}</span></li>
+                              <li>Remaining parts<span class="badge badge-warning">{{jobdetails.parts_remaining}}</span></li>
+                              <li>Parts delivered<span class="badge badge-warning">{{jobdetails.parts_deliverd}}</span></li>
+                            </ul>
+                          </div>
+                        </div>  
+                      </div>
+                    </div>
+                  </div>
+                </section>
+     <div ng-include="'footer.html'"></div>
+ </div>

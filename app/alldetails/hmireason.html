@@ -1,0 +1,149 @@
+
+<nav class="side-navbar">
+        <div class="side-navbar-wrapper">
+          <div class="sidenav-header d-flex align-items-center justify-content-center">
+            <img src="assets/images/logo.jpg" alt="person">
+          </div>
+      
+          <div class="main-menu">
+            <ul id="side-main-menu" class="side-menu list-unstyled">
+              <li class="">
+                <a href="" ng-click="pageverification1('/#!/alldetails')">
+                  <i class="fa fa-th-large" aria-hidden="true"></i>
+                  <span>Dashboard</span>
+                </a>
+              </li>
+              <li class="">
+                <a href="" ng-click="pageverification1('/#!/companydetails')">
+                  <i class="fa fa-desktop" aria-hidden="true"></i>
+                  <span>Machine Monitoring</span>
+                </a>
+              </li>
+            </li>
+            <li class="">
+              <a href="" ng-click="pageverification1('/#!/hmireason')">
+                <i class="fa fa-desktop" aria-hidden="true"></i>
+                <span>HMI Reason</span>
+              </a>
+            </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="page home-page">
+        <!--  <div ng-include="'header.html'"></div> -->
+        <header class="header">
+          <nav class="navbar">
+            <div class="container-fluid">
+              <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <div class="navbar-header">
+                  <a id="toggle-btn" href="" class="menu-btn">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                  </a>
+                  <a href="" class="navbar-brand">
+                    <div class="brand-text hidden-sm-down">
+                      <strong class="text-primary">
+                        <div>ALTIUS TECHNOLOGIES</div>
+                      </strong>
+                    </div>
+                  </a>
+                </div>
+                <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                
+                  <a href="" class="nav-link logout" data-toggle="modal" data-target="#exampleModalLabel3" ng-click="useredit()">Altius</a>
+                  <li class="nav-item">
+                    <a confirmed-click="signout()" ng-confirm-click="Are You Sure Want to Logout ?" class="nav-link logout">
+                      <i class="fa fa-sign-out"></i>
+                    </a>
+                  </li>
+      
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </header>
+       
+        <br>
+        <br>
+        <br>
+        
+      
+        <!-- <section class="updates">
+          <div class="container-fluid">
+            <header>
+              <h1 class="h3 display top">
+                <i class="fa fa-laptop"></i>Overall Machine Status
+                <ul>
+                  <li>
+                    <span class="dot_idle"></span>Net</li>
+                 
+                  <li>
+                    <span class="dot_stop"></span>Stop</li>
+                   
+                </ul>
+      
+              </h1>
+            </header>
+            <div class="row" ng-init="statusinit()">
+      
+              <div class="col-lg-12">
+                <div class="card bar-chart-example">
+                  <div class="card-block table_overflow" id="exportable">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Company Name</th>
+                          <th>Machine Name</th>
+                          <th>Last Date</th>
+                        </tr>
+                      </thead>
+                      <tbody ng-repeat="y in companystatus" class="border" ng-class="{stopped :y.machine_status=='100',nodata: y.machine_status == null,net : y.machine_status=='false'}">
+                        <tr>
+                          <td>{{y.tenant}}</td>
+                          <td>{{y.machine_name}}</td>
+                          <td>{{y.last_data}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section> -->
+        
+      
+        <div>
+      
+      
+          <script type="text/javascript">
+          
+            $(document).ready(function () {
+              $("#flip").click(function () {
+                $("#panel").slideToggle("fast");
+                $("#flip").toggleClass("open");
+              });
+            });
+          </script>
+      
+          <style type="text/css">
+            nav.side-navbar li.open a .arrow i {
+              transform: rotate(90deg);
+            }
+          </style>
+      
+      
+          <script type="text/javascript">
+            $('#toggle-btn').on('click', function (e) {
+      
+              e.preventDefault();
+      
+              if ($(window).outerWidth() > 1194) {
+                $('nav.side-navbar').toggleClass('shrink');
+                $('.page').toggleClass('active');
+              } else {
+                $('nav.side-navbar').toggleClass('show-sm');
+                $('.page').toggleClass('active-sm');
+              }
+            });
+          </script>

@@ -1,0 +1,79 @@
+   <div ng-include="'sidebar.html'"></div>
+   <div class="page home-page">     
+   <div ng-include="'header.html'"></div>
+
+    <section class="statistics section-padding section-no-padding-bottom section_top" ng-init="rolecreationinit()">
+            <div class="container-fluid">
+                <header>
+
+                   <div ng-show="myLoader" class="spinner">
+                        <img src="assets/images/spinner.gif" class="myspin">
+                    </div>
+
+                    <h1 class="h3 display rolecreate"><i class="fa fa-desktop" aria-hidden="true"></i> Role Registration <a class="btn_add" data-toggle="modal" data-target="#exampleModalLabel"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                        <span class="note">Note: Please configure your page settings under the actions tab for each role</span>
+                      </h1>
+                </header>
+
+                <div class="row d-flex align-items-stretch">
+                    <div class="col-lg-3" ng-repeat="role in roles">
+                        <div class="card machine_register_wrapper">
+                            <!-- Monthly Usage-->
+                            <div class="feed">
+                                <div class="feed-body machine_register">
+                                    <div class="content">
+                                        <div class="role"><i class="fa fa-key" aria-hidden="true"></i>
+                                            <h2>{{role.role_name}}</h2>
+                                        </div>
+
+                                        <div class="machine_edits shift_edits">
+                                            <div class="edit" ng-click="edit(role.id)" data-toggle="modal" data-target="#exampleModalLabel"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                            <div class="delete" confirmed-click="delete(role.id)"  ng-confirm-click="Do you want to delete"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                                            <div class="addic" ng-click="roleset(role.id)" title="Role Setting"><i class="fa fa-plus" aria-hidden="true"></i></div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+        
+   <!-- modal -->
+    <div class="modal fade" id="exampleModalLabel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Role Registration</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body machine-registration">
+                    <form name="role">
+                    <div class="row">
+                        <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Role Name</label>
+                            <input type="text" placeholder="Role" class="form-control" ng-model="roleregistration.role_name" ng-Required="true">
+                        </div>
+                        </div>
+                    </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="role.$invalid" ng-click="roleForm(rolename)" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div ng-include="'footer.html'"></div>
+ </div>

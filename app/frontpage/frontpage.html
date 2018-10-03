@@ -1,0 +1,224 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+  crossorigin="anonymous">
+
+<style>
+  body {
+    background: url("/assets/images/bg_login.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .db_cards .col-md-2 {
+    cursor: pointer;
+    float: none !important;
+    margin: 0 auto !important;
+  }
+
+  .container {
+    padding-top: 200px;
+    width: 1140px;
+    max-width: 100%;
+  }
+
+  .db_cards .card-body>h5 {
+    color: #333;
+    font-size: 14px;
+    position: relative;
+    top: 5px;
+  }
+
+  .db_cards .card {
+    padding: 30px 20px;
+    width: 200px;
+    border: solid 2px white;
+    border-radius: 10px;
+  }
+
+  .db_cards .card>i {
+    font-size: 40px;
+    color: #f79220;
+
+  }
+
+  .db_cards .row {
+    padding: 10px 0px;
+  }
+
+
+  .db_cards .card:hover {
+    -webkit-box-shadow: 2px 5px 77px -1px rgba(55, 55, 55, 1);
+    -moz-box-shadow: 2px 5px 77px -1px rgba(55, 55, 55, 1);
+    box-shadow: 2px 5px 77px -1px rgba(55, 55, 55, 1);
+  }
+
+  .db_cards .card:hover i.fab,
+  .db_cards .card:hover i.fas,
+  .db_cards .card:hover i.far {
+    transition: .2s ease-in;
+    transform: rotate(20deg);
+  }
+</style>
+
+<body>
+  
+  <!-- <div class="page home-page">      -->
+  <header class="front_page header">
+      <div ng-show="myLoader" class="spinner">
+          <img src="assets/images/spinner.gif" class="myspin">
+      </div>
+      
+    <nav class="navbar">
+      <div class="container-fluid">
+        <div class="navbar-holder d-flex align-items-center justify-content-between">
+          <div class="navbar-header">
+            <!-- <a id="toggle-btn" href="" class="menu-btn"><i class="fa fa-bars" aria-hidden="true"></i></a> -->
+            <a href="" class="navbar-brand">
+              <div class="brand-text hidden-sm-down">
+                <strong class="text-primary">
+                  <div ng-bind="tents"></div>
+                </strong>
+              </div>
+            </a>
+          </div>
+          <!-- <span> <button type="submit" class="btn btn-primary" ng-click="alert('xx')" id="opn"><i class="fa fa-bell-o" aria-hidden="true"></i>Alarms</button></span> -->
+          <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center nav_ic">
+            <!-- <li class="nav-item dropdown"> <a id="opn" title="Recent Alarms" ng-click="alarmClick()" rel="nofollow" href="" class="nav-link"><i class="fa fa-bell"></i></a></li> -->
+
+            <a href="" class="nav-link logout" data-toggle="modal" data-target="#exampleModalLabel3" ng-click="useredit()">{{username}}
+              <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+            </a>
+            <li class="nav-item">
+              <a title="Logout" style="cursor: pointer;" confirmed-click="signout()" ng-confirm-click="Are You Sure Want to Logout ?" class="nav-link logout">
+                <i class="fas fa-sign-out-alt"></i>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <nav class="front_page side-navbar" style="background: transparent">
+    <div class="side-navbar-wrapper">
+      <div class="sidenav-header d-flex align-items-center justify-content-center">
+        <img src="assets/images/logo.jpg" alt="person">
+      </div>
+      <!-- <div class="main-menu">
+                          
+                          </div> -->
+    </div>
+  </nav>
+
+  
+  <div class="container db_cards frontbody">
+
+    <div class="row">
+      <div class="col-md-2" align="center" id="dashboard" ng-click="pageverification('/#!/dashboard')">
+        <div class="card">
+          <i  class="fab fa-microsoft"></i>
+
+          <div class="card-body">
+            <h5 class="card-title">Dashboard</h5>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-2" align="center" id="alarms" ng-click="pageverification('/#!/alarms')">
+        <div class="card">
+          <i class="fas fa-bell"></i>
+          <div class="card-body">
+            <h5 class="card-title">Alarms</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2" align="center" id="alerts" ng-click="pageverification('/#!/alert')">
+        <div class="card">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div class="card-body">
+            <h5 class="card-title">Alerts</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2" align="center" id="alarmreports" ng-click="pageverification('/#!/alarmsreport')">
+        <div class="card">
+          <i class="far fa-folder-open"></i>
+          <div class="card-body">
+            <h5 class="card-title">Alarm reports</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2" align="center" id="log" ng-click="pageverification('/#!/connectionlog')">
+        <div class="card">
+          <i class="fas fa-history"></i>
+          <div class="card-body">
+            <h5 class="card-title">Log</h5>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-2" align="center" id="report" ng-click="pageverification('/#!/report')">
+        <div class="card">
+          <i class="far fa-file"></i>
+          <div class="card-body">
+            <h5 class="card-title">Report</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2" align="center" id="maintenance" ng-click="pageverification('/#!/notification')">
+        <div class="card">
+          <i class="fas fa-wrench"></i>
+          <div class="card-body">
+            <h5 class="card-title">Notification Setting</h5>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-2" align="center" id="masters" ng-click="pageverification('/#!/machine_registration')">
+        <div class="card">
+          <i class="fas fa-money-check"></i>
+          <div class="card-body">
+            <h5 class="card-title">Masters</h5>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-2" align="center" id="export" ng-click="pageverification('/#!/operator_allocation_masters')">
+        <div class="card">
+          <i class="fas fa-user-plus"></i>
+          <div class="card-body">
+            <h5 class="card-title">Operator Allocation</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2" align="center" id="operatorentry" ng-click="pageverification('/#!/usermanagement')">
+        <div class="card">
+          <i class="fas fa-users"></i>
+          <div class="card-body">
+            <h5 class="card-title">Users</h5>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  </div>
+
+  <div ng-include="'footer.html'"></div>
+</body>

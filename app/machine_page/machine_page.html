@@ -1,0 +1,327 @@
+ <div ng-include="'sidebar.html'"></div>
+   <div class="page home-page">     
+   <div ng-include="'header.html'"></div>
+          <script src="assets/js/custom.js"></script>
+    <section class="statistics section-padding section-no-padding-bottom section_top">
+          <div class="container-fluid">
+          <header> 
+          <div ng-show="myLoader" class="spinner">
+                <img src="assets/images/spinner.gif" class="myspin">
+          </div>
+              <h1 class="h3 display machinestate"><i class="fa fa-laptop"></i>Machine Status
+              <a href="" ng-click="pageverification('/#!/dashboard')" class="btn_top"><i class="fa fa-desktop" aria-hidden="true"></i>Dashboard</a>
+              </h1>
+            </header>
+
+            <div class="card card_status">
+                  <div class="card-block">
+                     <form name="machinepage"> 
+                        <div class="row">
+                              <div class="col-md-3">
+                                      <div class="form-group">
+                                        <label>Select Machine Name</label>
+                                           <div class="select">
+                                              <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in allmachines" ng-model="MachineID" ng-change="checkingmachineid(MachineID)" ng-Required="true">
+                                                 <option>-- Select Machine --</option>
+                                              </select>
+                                           </div>
+                                      </div>   
+                              </div>
+                              <div class="col-md-3">
+                                      <div class="form-group">
+                                          <label>Select Shift</label>
+                                            <div class="select">
+                                                  <select    ng-model="shiftside" class="form-control" ng-change="shift(shiftside)" ng-options="g.name for g in shiftsList" ng-Required="true">
+                                                   <option value="" style="display:true;">Select shift</option> 
+                                                     </select>
+                                            </div>
+                                      </div>
+                              </div>
+                              <div class="col-md-4">
+                                    <div class="form-group"  min-date="momentYesterday">
+                                          <label> Select Date</label>                     
+                                              <div class="input-group" moment-picker="ctrl.datepicker" format="YYYY-MM-DD" max-date="momentToday">
+                                                  <span class="input-group-addon addon-inside bg-green"><i class="fa fa-calendar"></i></span>
+                                                  <input type="text" class="form-control" placeholder="{{date | date:'yyyy-MM-dd'}}" ng-model="ctrl.datepicker">                                  
+                                              </div>
+                                    </div>
+                              </div>
+                              <div class="col-md-2">
+                                      <div class="form-group">
+                                              <label></label>
+                                                 <div class="input-group">
+                                                     <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModalHorizontal" title="GO" ng-disabled="machinepage.$invalid" ng-click="GO(ctrl.datepicker);" style="line-height: 23px;">
+                                                    <span class="fa fa-check"></span>
+                                                    </button>
+                                                </div>
+                                        </div>                          
+                              </div>          
+                        </div>
+                        </form>
+                  </div>
+            </div>
+
+        </section>
+
+
+
+        <!-- Updates Section -->
+        <section class="updates">
+          <div class="container-fluid">
+            <div class="row">
+
+              <div class="col-lg-4 col-md-4">
+                <div class="card pie-chart-example">
+                            <div class="card-block">                       
+                         
+                            <div ng-hide="hoursplitList==undefined">                           
+                                <center>
+                                    <select ng-model="hoursplitside"  class="form-control" ng-change="hoursplit(hoursplitside);" ng-options="g.time_details for g in hoursplitList">                                    
+                                    <option value="" style="display:true;">Select</option>
+                                  </select>
+                                </center>                          
+                            </div>
+                            <br>
+                                <div ng-show="hourStatus==1">
+                                    <img src="assets/images/nodata.jpeg" style="width: 100%;height: 100%;">
+                                    <br><br><br><br><br><br>
+                                 </div>
+                                <div ng-show="hourStatus==2">
+                                    <canvas id="pieChartExample"></canvas>
+                                    <div class="feed">
+                                        <div class="feed-body machine_register">
+
+                                            <div class="content">
+                                                <h2>{{singlemachines.machine_name}}</h2>
+                                                <h4>{{singlemachines.machine_serial_no}}</h4>
+                                                <div class="full-date">
+                                                    <p style="font-size: 15px;"><span style="display: inline-block;font-size: 15px;">Model:</span>{{singlemachines.machine_model}}</p>
+                                                    <p style="font-size: 15px;"><span style="display: inline-block;font-size: 15px;">IP:</span>{{singlemachines.machine_ip}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                       </div>
+                </div>
+          </div>
+
+
+
+<div class="row  col-lg-5 col-md-5 bhoechie-tab-container">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
+              <div class="list-group">
+                <a href="" class="list-group-item active text-center" ng-click="openModal(3)">
+                  <h4 class="glyphicon glyphicon-plane"></h4><br/>Running
+                </a>
+                <a href="" class="list-group-item text-center" ng-click="openModal(0)">
+                  <h4 class="glyphicon glyphicon-road"></h4><br/>Idle
+                </a>
+                <a href="" class="list-group-item text-center" ng-click="openModal(100)">
+                  <h4 class="glyphicon glyphicon-home"></h4><br/>Stop
+                </a>
+                
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
+                <div class="bhoechie-tab-content active">                   
+                    <div ng-if="Hourstatus==1">
+                    
+                          <div ng-if="NoDatas==false">
+                               <img src="assets/images/nodata.jpeg" style="width: 100%;height: 100%;">
+                          </div>
+                          <div ng-if="NoDatas!=false">
+
+                                      <table class="table tbscroll">
+                                       <thead>
+                                          <tr>
+                                            <th>Time</th>
+                                            <th>H:M:S</th>
+                                          </tr>
+                                          </thead>
+                                           <tbody>
+                                                <tr ng-repeat="x in MachineReportTimes">
+                                                  <td ng-if="IDStatus==3">{{x.time_interval}}</td>
+                                                  <td ng-if="IDStatus==3">{{x.run_time}}</td>
+                                                </tr>
+                                            <tbody>
+                                        </table>                             
+                         </div>     
+                    </div>
+                     <div ng-if="Hourstatus!=1">
+                         <table class="table tbscroll">
+                          <thead>
+                            <tr>
+                              <th>Time</th>
+                              <th>H:M:S</th>
+                              <th>Parts</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="x in MachineTimeDetails track by $index">
+                                  <td ng-if="IDStatus==3">{{x.hour}}</td>
+                                  <td ng-if="IDStatus==3">{{x.total_time}}</td>
+                                  <td ng-if="IDStatus==3">{{x.parts_count}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="bhoechie-tab-content">                                                 
+                     <div ng-if="Hourstatus==1">
+                    
+                          <div ng-if="NoDatas==false">
+                               <img src="assets/images/nodata.jpeg" style="width: 100%;height: 100%;">
+                          </div>
+                          <div ng-if="NoDatas!=false">
+
+                                     <table class="table tbscroll">
+                                       <thead>
+                                          <tr>
+                                            <th>Time</th>
+                                            <th>H:M:S</th>
+                                          </tr>
+                                          </thead>
+                                           <tbody>                                         
+                                                 <tr ng-repeat="x in MachineReportTimes">
+                                                  <td ng-if="IDStatus==0">{{x.time_interval}}</td>
+                                                  <td ng-if="IDStatus==0">{{x.ideal_time}}</td>
+                                                </tr>     
+
+                                            <tbody>
+                                        </table>                             
+                         </div>     
+                    </div>
+                     <div ng-if="Hourstatus!=1">
+                         <table class="table tbscroll">
+                          <thead>
+                            <tr>
+                              <th>Time</th>
+                              <th>H:M:S</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="x in MachineTimeDetails track by $index">
+                                  <td ng-if="IDStatus==0">{{x.hour}}</td>
+                                  <td ng-if="IDStatus==0">{{x.total_time}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+    
+                <div class="bhoechie-tab-content">                      
+                    <div ng-if="Hourstatus==1">
+                    
+                          <div ng-if="NoDatas==false">
+                               <img src="assets/images/nodata.jpeg" style="width: 100%;height: 100%;">
+                          </div>
+                          <div ng-if="NoDatas!=false">
+
+                                    <table class="table tbscroll">
+                                       <thead>
+                                          <tr>
+                                            <th>Time</th>
+                                            <th>H:M:S</th>
+                                          </tr>
+                                          </thead>
+                                           <tbody>
+                                                <tr ng-repeat="x in MachineReportTimes">
+                                                  <td ng-if="IDStatus==100">{{x.time_interval}}</td>
+                                                  <td ng-if="IDStatus==100">{{x.stop_time}}</td>
+                                                </tr>
+                                            <tbody>
+                                        </table>
+                             
+                         </div>     
+                    </div>
+                     <div ng-if="Hourstatus!=1">
+                         <table class="table tbscroll">
+                          <thead>
+                            <tr>
+                              <th>Time</th>
+                              <th>H:M:S</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="x in MachineTimeDetails track by $index">
+                                  <td ng-if="IDStatus==100">{{x.hour}}</td>
+                                  <td ng-if="IDStatus==100">{{x.total_time}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                </div>                
+            </div>
+  </div>
+
+
+              <div class="col-lg-3 col-md-3">
+                  <div class="card">
+                    <div class="card-block">                   
+                        <ul class="status_list">
+                          <li>Parts produced<span class="badge badge-warning">{{jobdesc.parts_produced}}</span></li>
+                          <li>Rejects<span class="badge badge-warning">{{jobdesc.rejects}}</span></li>
+                          <li>Rework<span class="badge badge-warning">{{jobdesc.rework}}</span></li>
+                          <li>Inspection<span class="badge badge-warning">{{jobdesc.inspection}}</span></li>
+                          <li>Remaining parts<span class="badge badge-warning">{{jobdesc.remaining_parts}}</span></li>
+                          <li>Parts delivered<span class="badge badge-warning">{{jobdesc.parts_delivered}}</span></li>                                            
+                        </ul>
+                    </div>
+                  </div>  
+
+                   <div class="card" style="margin-top: 20px;">
+                    <div class="card-block">                   
+                        <ul class="status_list">                                        
+                          <li>Running
+                              <span class="badge badge-warning">{{MachineReport.total_run_time}}</span>
+                          </li>
+                          <li>Downtime
+                              <span class="badge badge-warning">{{MachineReport.total_ideal_time}}</span>
+                          </li>
+                          <li>Stopping
+                              <span class="badge badge-warning">{{MachineReport.total_stop_time}}</span>
+                          </li>
+                          <li>Remaining
+                              <span class="badge badge-warning">{{MachineReport.remaining_time}}</span>
+                          </li>                        
+                        </ul>
+                    </div>
+                  </div>  
+              </div>   
+
+      </div>
+    </div>
+  </section>
+
+        <section class="charts table_margin">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="card line-chart-example">
+                  <div class="card-header d-flex align-items-center">
+                    <h2 class="h5 display">Graphical Representation</h2>
+                  </div>
+                  <div class="card-block">
+                    <canvas id="lineChartExample"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <!--div class="card bar-chart-example">
+                  <div class="card-header d-flex align-items-center">
+                    <h2 class="h5 display">Machine Performace Status</h2>
+                  </div>
+                  <div class="card-block">
+                    <canvas id="barChartExample"></canvas>
+                  </div>
+                </div-->
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+
+<div ng-include="'footer.html'"></div>
+ </div>

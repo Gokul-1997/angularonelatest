@@ -1,0 +1,162 @@
+   <div ng-include="'sidebar.html'"></div>
+   <div class="page home-page">     
+   <div ng-include="'header.html'"></div>
+
+  <section class="updates section-padding section_top" ng-init="cncoperationinit()">
+            <div class="container-fluid">
+                <div ng-show="myLoader" class="spinner">
+                   <img src="assets/images/spinner.gif" class="myspin">
+                </div> 
+                <div class="row">
+                    <!-- Daily Feed-->
+                    
+                    <div class="col-lg-12">
+                        <header>
+                            <h1 class="h3 display"><i class="fa fa-laptop"></i>Operation Registration  Customer: {{names_for_job.cncclient.client_name}} Job:{{names_for_job.job.description}} <a href="" class="btn_add" data-toggle="modal" data-target="#exampleModalLabel" ng-click="cleandata()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                          </h1>
+                        </header>
+                        <div class="card">
+                            <div class="card-block">
+                                <table class="table table-striped table-sm table_front">
+                                    <thead>
+                                        <tr>
+                                           <th>Operation Name</th>
+                                           <th>Operation Number</th>
+                                           <th>Run Time</th>
+                                           <th>Loading and Unloading Time</th>
+                                           <th>Cycle Time</th>
+                                           <th>Start Date</th>
+                                           <th>End Date</th>
+                                           <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="ops in op">
+                                         <td>{{ ops.operation_name }}</td>
+                                         <td>{{ ops.operation_no }}</td>
+                                         <td>{{ ops.cycle_time }}</td>
+                                         <td>{{ ops.idle_cycle_time }}</td>
+                                         <td>{{ops.total_cycle_time}}</td>
+                                         <td>{{ops.start_date}}</td>
+                                         <td>{{ops.end_date}}</td>
+                                            <td>
+                                                <ul class="item-actions-list">
+                                                    <li>
+                                                        <a class="remove"> <i class="fa fa-trash-o " confirmed-click="delete(ops.id)"  ng-confirm-click="Do you want to delete"></i> </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="edit" data-toggle="modal" data-target="#exampleModalLabel" title="Edit" ng-click="edit(ops.id)"> <i class="fa fa-pencil"></i> </a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- modal -->
+    <div class="modal fade" id="exampleModalLabel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Operation Registration</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body machine-registration">
+                    <form name="cnc">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Operation Name</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="opregistration.operation_name" ng-Required="true" placeholder="Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Operation number</label>
+                                    <div class="input-group" >
+                                        <input type="text" class="form-control" ng-model="opregistration.operation_no" ng-Required="true" placeholder="Number">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Start Date</label>
+                                    <div class="input-group" moment-picker="opregistration.start_date"  format="YYYY-MM-DD" min-date="jobdetails.job_start_date"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" ng-Required="true" ng-model="opregistration.start_date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>End Date</label>
+                                    <div class="input-group" moment-picker="opregistration.end_date"  format="YYYY-MM-DD" min-date="opregistration.start_date" max-date="jobdetails.job_due_date"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" ng-Required="true" ng-model="opregistration.end_date">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                               <div class="form-group">
+                                    <label>Cycle Time</label>
+                                    <div class="input-group"><span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" ng-Required="true" ng-model="opregistration.cycle_time_dummy" size="8" data-time-format="HH:mm:ss" bs-timepicker>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Idle Time</label>
+                                    <div class="input-group"><span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" ng-Required="true" ng-model="opregistration.idle_cycle_time_dummy" size="8" name="time" data-time-format="HH:mm:ss" bs-timepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <div class="input-group" >
+                                        <input type="text" class="form-control" ng-model="jobregistration.description" ng-Required="true" placeholder="Description" ng-model="opregistration.description">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                            <label>Plan Status</label>
+                            <div class="select">
+                                <select name="account" class="form-control" ng-options="plan.id as plan.planstatus_name for plan in plans1" ng-model="opregistration.planstatus_id" class="btn btn-default select-width selectpicker form-control">
+                                    <option>Select Plan</option>
+                                </select>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="cnc.$invalid" ng-click="operationForm()" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <div ng-include="'footer.html'"></div>
+ </div>

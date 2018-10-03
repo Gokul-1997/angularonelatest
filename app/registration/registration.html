@@ -1,0 +1,148 @@
+  <style type="text/css">
+    .active_button{
+display: block;
+    }
+    .deactive_button{
+display: none;  
+    }
+  </style>
+
+
+<div class="page register-page">
+    <div ng-show="myLoader" class="spinner">
+      <img src="assets/images/spinner.gif" class="myspin">
+    </div>
+  <div class="container">
+    <div class="form-outer d-flex align-items-center register">
+      <div class="form-inner" style="width:100%">
+        <div class="logo text-center"><img src="assets/images/logo.jpg"></div>
+          <p class="text-center">Register to continue with Yantra24x7</p>
+          
+          <form id="login-form" name="register" ng-submit="signup()" method="post">            
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-first_name" class="label-custom">First Name<span style="color: red;">*</span></label>
+                  <input id="register-first_name" type="text" name="first_name" ng-model="registration.first_name" ng-Required="true">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-last_name" class="label-custom">Last Name</label>
+                  <input id="register-last_name" type="text" name="last_name" ng-model="registration.last_name" ng-Required="true">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-email" class="label-custom">Email Address<span style="color: red;">*</span></label>
+                  <input id="register-email" type="email" name="email" ng-model="registration.email_id" ng-keydown="emailvalidate()" ng-Required="true">
+                  <span style="color: red;">{{errormsg}}</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-passowrd" class="label-custom">Password <span style="color: red;">*</span></label>
+                  <input id="register-passowrd" type="password" name="password"  ng-model="registration.password" ng-Required="true">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-phone_number" class="label-custom">Phone Number (eg:9876543210)<span style="color: red;">*</span></label>
+                  <input id="register-phone_number" type="text" name="phone_number" ng-model="registration.phone_number" ng-pattern="/^(?:\d{10}|\w+@\w+\.\w{2,3})$/" ng-Required="true">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-tenant_name" class="label-custom">Company Name<span style="color: red;">*</span></label>
+                  <input id="register-tenant_name" type="text" name="tenant_name" ng-model="registration.tenant_name" ng-Required="true">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-address_line1" class="label-custom">Address Line1<span style="color: red;">*</span></label>
+                  <input id="register-address_line1" type="textarea" name="address_line1" ng-model="registration.address_line1" ng-Required="true">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-address_line2" class="label-custom">Address Line2</label>
+                  <input id="register-address_line2" type="text" name="address_line2" ng-model="registration.address_line2" >
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-remarks" class="label-custom">About Company<span style="color: red;">*</span></label>
+                  <input id="register-remarks" type="text" name="remarks" ng-model="registration.remarks" ng-Required="true">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-city" class="label-custom">City<span style="color: red;">*</span></label>
+                  <input id="register-city" type="text" name="city" ng-model="registration.city" ng-Required="true">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-state" class="label-custom">State<span style="color: red;">*</span></label>
+                  <input id="register-state" type="text" name="state" ng-model="registration.state" ng-Required="true">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-country" class="label-custom">Country<span style="color: red;">*</span></label>
+                  <input id="register-country" type="text" name="country" ng-model="registration.country" ng-Required="true">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-pincode" class="label-custom">Pincode (eg:654321)<span style="color: red;">*</span></label>
+                  <input id="register-pincode" type="text" name="pincode" ng-model="registration.pincode" ng-pattern="/^(\d{6}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/"  ng-Required="true">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12"></div>
+            </div>
+ 
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <div class="terms-conditions d-flex justify-content-center">
+                  <input id="license" type="checkbox" class="form-control-custom" >
+                  <label for="license">Agree the terms and policy</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                <div class="terms-conditions d-flex justify-content-center">
+              <button style="width:50%" id="register" type="submit" ng-disabled="register.$invalid" class="btn btn-primary btn-block">Register</button>
+              <!-- <button id="register" type="submit" ng-disabled="{active_button: inputform.email.$valid, deactive_button:registration.email_id =='' && registration.password == '' && registration.phone_number ==''}" class="btn btn-primary btn-block">Register</button> -->
+            </div>
+          </div>
+            </div>
+          </form>
+          <div class="login_footer">
+            <small>Already have an account? </small><a href="#" class="signup">Login</a>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="assets/js/front.js"></script>

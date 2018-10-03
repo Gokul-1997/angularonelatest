@@ -1,0 +1,156 @@
+
+ <div ng-include="'sidebar.html'"></div>
+   <div class="page home-page">     
+   <div ng-include="'header.html'"></div>
+
+   <script src="assets/js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
+<script src="assets/js/Chart.min.js"></script>
+      <script src="assets/js/charts-operator-entry.js"></script>
+
+<section class="statistics section-padding section-no-padding-bottom section_top">
+            <div class="container-fluid">
+                <header>
+                    <h1 class="h3 display opratortop"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Operator Entry<!--  <a class="btn_add" data-toggle="modal" data-target="#exampleModalLabel"><i class="fa fa-plus" aria-hidden="true"></i></a> --></h1>
+                </header>
+
+                <div class="row d-flex align-items-stretch">
+                   <!--  <div class="col-lg-4">
+                        <div class="card pie-chart-example">
+                            <div class="card-block">
+                                <canvas id="pieChartExample"></canvas>
+                                <div class="feed">
+                                    <div class="feed-body machine_register">
+
+                                        <div class="content">
+                                            <h2>GTA/VMC-1260</h2>
+                                            <h4>1235457</h4>
+                                            <div class="full-date">
+                                                <p><span>Model:</span> DBV123458</p>
+                                                <p><span>IP:</span> 192.168.11.10</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="form-group row">
+                                    <div class="machine"><img src="assets/images/machine.jpg"></div>
+                                    <div class="col-sm-12 select">
+                                        <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in operatormachines" ng-model="operatorentry.machine_id">
+                                            <option value="">select machine</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <div class="col-sm-12 select">
+                                        <select name="account" class="form-control" ng-options="sh.id as sh.shift_no for sh in shiftstransfordrop1" ng-model="operatorentry.shifttransaction_id" >
+                                            <option value="">select shift</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="row ">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>From Time</label>
+                                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                                            <input type="text" class="form-control" ng-Required="true" ng-model="operatorentry.from_time" ng-readonly="false" size="8" bs-timepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>To Time</label>
+                                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                                            <input type="text" class="form-control" ng-Required="true" ng-model="operatorentry.to_time" ng-readonly="false" size="8" bs-timepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Total Down Time</label>
+                                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                                                <input type="text" class="form-control" ng-Required="true" ng-model="operatorentry.total_down_time"  size="8" data-time-format="HH:mm:ss" bs-timepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Last Machine Reset Time</label>
+                                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                                                <input type="text" class="form-control" ng-Required="true" ng-model="operatorentry.last_machine_reset_time"  size="8" bs-timepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="form-group">
+                                    <label>No.of Rejects</label>
+                                    <div class="input-group"><!-- <span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span> -->
+                                        <input type="text" class="form-control" ng-Required="true"  ng-model="operatorentry.no_of_rejects">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>No.of Parts Produced</label>
+                                    <div class="input-group"><!-- <span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span> -->
+                                        <input type="text" class="form-control" ng-Required="true"  ng-model="operatorentry.no_of_parts_produced">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>No.of Parts moved to next operation</label>
+                                    <div class="input-group"><!-- <span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span> -->
+                                        <input type="text" class="form-control" ng-Required="true"  ng-model="operatorentry.parts_moved_to_next_operation">
+                                    </div>
+                                </div>
+                                <div class="form_tabs">
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="" role="tab">Remarks if any</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="" role="tab">Reason for downtime</a>
+                                        </li>
+
+                                    </ul>
+
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="home" role="tabpanel">
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="exampleTextarea" rows="3" ng-Required="true"  ng-model="$scope.operatorentry.remarks"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="profile" role="tabpanel">
+                                            <div class="form-group">
+                                                <label for="exampleTextarea">Example textarea</label>
+                                                <textarea class="form-control" id="exampleTextarea" rows="3" ng-Required="true"  ng-model="operatorentry.reason_for_down_time"></textarea>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <button class="btn btn-success btn-block" ng-disabled="operator.$invalid" ng-click="operatorForm()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+     <div ng-include="'footer.html'"></div>
+ </div>
+

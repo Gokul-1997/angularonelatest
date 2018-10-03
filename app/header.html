@@ -1,0 +1,251 @@
+     <style>
+        ul{
+			list-style: none;
+			padding: 0;
+			margin:0;
+		}
+		.ic_notify{
+      background: #ec6e17;
+   width: 42px;
+   height: 42px;
+   border-radius: 50%;
+   text-align: center;
+   float: left;
+   margin-right: 10px;
+   line-height: 42px;
+   display: none;
+		}
+		.ic_notify i{
+      color: #fff;
+   font-size: 16px;
+
+		}
+		.notify_right{
+      float: left;
+      
+
+		}
+		.notify_right h1, .notify_right h4, .notify_right h2{
+			margin:0;
+			padding: 0;
+			
+		}
+		.notify_right h4
+		{
+			font-size: 12px;
+			font-style: italic;
+			color: #ef8850;
+		}
+		.notify_right h1
+		{ 
+      font-size: 19px;
+   color: #1d1d1d;
+   margin: 4px 0px;
+		}
+		.notify_right h2
+		{
+      background: #efefef;
+   padding: 5px;
+   font-size: 13px;
+   word-break: break-word;
+		}
+		.notify_right h2 span
+		{
+			color: #ec6e17;
+    }
+    
+    h4.alarm_unit {
+   padding: 10px;
+   background: #cacaca;
+   font-size: 15px;
+   font-weight: 600;
+   position: sticky;
+   top: 40px;
+}
+.alarm_row{
+  border-bottom: 1px solid #dcdcdc;
+padding: 12px 14px;
+background-color: #f2f2f2;
+margin-bottom: 5px;
+}
+
+.notify_right {
+float: left;
+width: 100%;
+} 
+        </style>
+        <!-- navbar-->
+        <header class="header">
+          <nav class="navbar">
+            <div class="container-fluid">
+              <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <div class="navbar-header">
+                  <a id="toggle-btn" href="" class="menu-btn"><i class="fa fa-bars" aria-hidden="true"></i></a>
+                  <a href="" class="navbar-brand">
+                    <div class="brand-text hidden-sm-down"><strong class="text-primary"><div ng-show="usertype_id == 1" ng-bind="tents"></div></strong>
+                    </div></a>
+                </div>
+                <!-- <span> <button type="submit" class="btn btn-primary" ng-click="alert('xx')" id="opn"><i class="fa fa-bell-o" aria-hidden="true"></i>Alarms</button></span> -->
+                <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center nav_ic">
+                    <li class="nav-item dropdown" ng-show="usertype_id == 1"> <a id="opn" title="Recent Alarms" ng-click="alarmClick()" rel="nofollow" href="" class="nav-link"><i class="fa fa-bell"></i></a></li>
+                  <!-- <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell"></i><span class="badge badge-warning">12</span></a>
+                    <ul aria-labelledby="notifications" class="dropdown-menu">
+                      <li><a rel="nofollow" href="" class="dropdown-item"> 
+                          <div class="notification d-flex justify-content-between">
+                            <div class="notification-content"><i class="fa fa-envelope"></i>You have 6 new messages </div>
+                            <div class="notification-time"><small>4 minutes ago</small></div>
+                          </div></a></li>
+                      <li><a rel="nofollow" href="" class="dropdown-item"> 
+                          <div class="notification d-flex justify-content-between">
+                            <div class="notification-content"><i class="fa fa-twitter"></i>You have 2 followers</div>
+                            <div class="notification-time"><small>4 minutes ago</small></div>
+                          </div></a></li>
+                      <li><a rel="nofollow" href="" class="dropdown-item"> 
+                          <div class="notification d-flex justify-content-between">
+                            <div class="notification-content"><i class="fa fa-upload"></i>Server Rebooted</div>
+                            <div class="notification-time"><small>4 minutes ago</small></div>
+                          </div></a></li>
+                      <li><a rel="nofollow" href="" class="dropdown-item"> 
+                          <div class="notification d-flex justify-content-between">
+                            <div class="notification-content"><i class="fa fa-twitter"></i>You have 2 followers</div>
+                            <div class="notification-time"><small>10 minutes ago</small></div>
+                          </div></a></li>
+                      <li><a rel="nofollow" href="" class="dropdown-item all-notifications text-center"> <strong> <i class="fa fa-bell"></i>view all notifications                                            </strong></a></li>
+                    </ul>
+                  </li>
+                   -->
+                   <!-- <li class="nav-item"><a id="opn"  href=""><i  class="fa fa-bell-o" aria-hidden="true"></i></a></li> -->
+                  <a href="" class="nav-link logout" data-toggle="modal" data-target="#exampleModalLabel3" ng-click="useredit()">{{username}}<i ng-show="usertype_id == 1" class="fa fa-pencil" aria-hidden="true"></i></a>
+                  <li class="nav-item"><a title="Logout" style="cursor: pointer;" confirmed-click="signout()" ng-confirm-click="Are You Sure Want to Logout ?" class="nav-link logout"> <i class="fa fa-sign-out"></i></a></li>
+
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </header>
+        
+
+  <!-- <!- modal -->
+  <div class="modal fade" id="exampleModalLabel3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel3">Edit User Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body machine-registration">
+                    <form id="login-form" name="editprof">            
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label  class="label-custom">First Name<span style="color: red;">*</span></label>
+                  <input id="register-username" type="text" name="first_name" class="form-control" ng-model="profile_edit.first_name" ng-Required="true">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label  class="label-custom">Last Name</label>
+                  <input id="register-username1" type="text" name="last_name" class="form-control" ng-model="profile_edit.last_name" ng-Required="true">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-email" class="label-custom">Email Address<span style="color: red;">*</span></label>
+                  <input id="register-email" type="email" name="email" class="form-control" ng-model="profile_edit.email_id" ng-keydown="emailvalidate()" ng-Required="true">
+                  <span style="color: red;">{{errormsg}}</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-passowrd" class="label-custom">Password <span style="color: red;">*</span></label>
+                  <input id="register-passowrd" type="password" name="password" class="form-control"  ng-model="profile_edit.password" ng-Required="true">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label class="label-custom">Phone Number<span style="color: red;">*</span></label>
+                  <input id="register-username3" type="text" name="phone_number" class="form-control" ng-model="profile_edit.phone_number" ng-pattern="/^(?:\d{10}|\w+@\w+\.\w{2,3})$/" ng-Required="true">
+                </div>
+              </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="editprof" type="submit" ng-click="usereditForm()" ng-disabled="editprof.$invalid" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
+
+<script type="text/javascript">
+    $('#toggle-btn').on('click', function (e) {
+
+        e.preventDefault();
+
+        if ($(window).outerWidth() > 1194) {
+            $('nav.side-navbar').toggleClass('shrink');
+            $('.page').toggleClass('active');
+        } else {
+            $('nav.side-navbar').toggleClass('show-sm');
+            $('.page').toggleClass('active-sm');
+     }
+    });
+</script>        
+
+<nav class=" sidebar_right shrink" style="overflow-y: scroll">
+  
+    <h3> Recent Alarms <i title="close" class="fa fa-close float-left close-rightbar" style="padding: 10px 0; font-size: 20px"></i></h3>
+    <div>
+    <div  ng-repeat="(key,Alarm1) in AlarmDash.data">  
+   <h4 class="alarm_unit">{{key}}</h4>
+    <ul >
+      <li class="alarm_row"  ng-repeat="Alarm in Alarm1" ng-show="Alarm.alarm_date !=null">
+        <div class="ic_notify" ><i class="fa fa-hourglass-half" aria-hidden="true"></i></div>
+        <div class="notify_right">
+          <h4>{{Alarm.alarm_date}} {{Alarm.alarm_month}} {{Alarm.alarm_year}} {{Alarm.alarm_time}}</h4>
+          <h1>{{Alarm.machine_name}} </h1>
+          <h2>{{Alarm.alarm.alarm_type}}-{{Alarm.alarm.alarm_number}} : {{ Alarm.alarm.alarm_message }}</h2>
+        </div>
+        <div class="clearfix"></div>
+      </li>
+    
+    </ul>
+  </div>
+</div>
+  </nav>
+  
+
+  
+  
+  </div>
+  <div class="sidebar-overlay"></div>
+  
+  <script>
+    $("#opn").click(function(){
+     
+     $(".sidebar_right").toggleClass("shrink");
+     $(".sidebar-overlay").toggleClass("sbar_active");
+   });
+    $(".sidebar-overlay").click(function(){
+     $(".sidebar_right").toggleClass("shrink");
+     $(".sidebar-overlay").toggleClass("sbar_active");
+   });
+   $(".close-rightbar").click(function(){
+     $(".sidebar_right").toggleClass("shrink");
+     $(".sidebar-overlay").toggleClass("sbar_active");
+   });
+  
+   
+  </script>
+

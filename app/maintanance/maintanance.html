@@ -1,0 +1,144 @@
+   <div ng-include="'sidebar.html'"></div>
+   <div class="page home-page">     
+   <div ng-include="'header.html'"></div>
+
+
+    <section class="statistics section-padding section-no-padding-bottom section_top" ng-init="maintananceinit()">
+
+            <div class="container-fluid" >
+                <header>
+                 <div ng-show="myLoader" class="spinner">
+                    <img src="assets/images/spinner.gif" class="myspin">
+                 </div>
+                    <h1 class="h3 display maintaintop"><i class="fa fa-desktop" aria-hidden="true"></i> Maintenance <a ng-click="cleandata()" class="btn_add" data-toggle="modal" data-target="#maintanance"><i class="fa fa-plus" aria-hidden="true"></i></a></h1>
+                </header>
+               
+                <div class="row d-flex align-items-stretch">
+                    <div class="col-lg-3" ng-repeat="mt in allmaintanances">
+                        <div class="card machine_register_wrapper">
+                            <!-- Monthly Usage-->
+                            <div class="feed">
+                                <div class="feed-body machine_register">
+                                    <div class="content">
+                                        <div class="machine_edits">
+                                            <div class="edit" ng-click="edit(mt.id)" data-toggle="modal" data-target="#maintanance"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                            <div class="delete" confirmed-click="delete(mt.id)"  ng-confirm-click="Do you want to delete"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                                            <div class="count">{{$index+1}}</div>
+
+                                        </div>
+                                         <div >
+                                         
+                                        <h2 ng-bind="showdetails(mt.machine_id)"></h2>
+                                        <h4>{{ mt.maintanance_type }}</h4>
+                                        <div class="full-date">
+                                            <p><span>Engineer:</span> {{ mt.service_engineer_name}}</p>
+                                        </div>
+                                        <div class="row maintenance_icon">
+                                            <div class="col-md-6 status_first">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i> {{ mt.maintanance_date}}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <i class="fa fa-clock-o"></i> {{mt.maintanance_time}}
+                                            </div>
+                                        </div>
+                                        <div class="remarks">{{ mt.remarks}}
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+<!-- modal -->
+    <div class="modal fade" id="maintanance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Maintenance</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body machine-registration">
+                    <form name="maintanance">
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Machine name</label>
+                                    <div class="select">
+                                        <select name="account" class="form-control" ng-model="maintananceentry.machine_id" ng-Required="true">
+                                            <option>---Select Machine---</option>
+                                             <option value="{{mc.id}}" ng-value="mc.id" ng-repeat="mc in allmachines">
+                                           {{mc.machine_name}}</option> 
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Machine Type</label>
+                                    <div class="select">
+                                        <select name="account" class="form-control" ng-model="maintananceentry.maintanance_type" ng-Required="true">
+                                           <option value="Amc">AMC</option> 
+                                           <option value="Preventive"> Preventive</option> 
+                                           <option value="Schedule"> Schedule</option> 
+                                           <option value="Unplanned"> Unplanned</option> 
+                                           <option value="Coolant">Coolant </option> 
+                                           <option value="Lubricant">Lubricant</option> 
+                                           <option value="Breakdown">Breakdown</option> 
+                                           <option value="Calibration">Calibration </option> 
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Engineer</label>
+                                    <input type="text" class="form-control" ng-Required="true"  ng-model="maintananceentry.service_engineer_name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Date</label>
+                                    <div class="input-group" moment-picker="maintananceentry.maintanance_date"  format="YYYY-MM-DD"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" ng-model="maintananceentry.maintanance_date" ng-Required="true" placeholder="Maintenance Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Time</label>
+                                    <div class="input-group"><span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" ng-Required="true"  ng-model="maintananceentry.maintanance_time_dummy" size="8" name="time" data-time-format="HH:mm:ss" bs-timepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <input type="text" class="form-control" ng-Required="true"  ng-model="maintananceentry.remarks">
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="maintanance.$invalid" ng-click="clientForm()" >Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <div ng-include="'footer.html'"></div>
+ </div>

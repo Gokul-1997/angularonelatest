@@ -1,0 +1,86 @@
+<style>
+  .running{
+    /*background-color:rgb(76,175,80) ;*/
+    background-color: rgb(44,190,99);
+    color:  rgb(44,190,99);
+}
+.idle {
+  /*background-color:rgb(249,168,37) ;*/
+  background-color: rgb(232,162,73);
+  color:  rgb(232,162,73);
+}
+.stopped{
+  /*background-color:rgb(198,40,40) ;*/
+  background-color: rgb(236,85,80);
+  color:  rgb(236,85,80);
+}
+.net{
+  /*background-color:rgb(198,40,40) ;*/
+  background-color: rgb(70, 63, 176);
+  color:  rgb(70, 63, 176);;
+}
+.nodata{
+  background-color: #444444;
+}
+</style>
+ <div ng-include="'adminsidebar.html'"></div>
+ <div class="page home-page">     
+ <div ng-include="'header.html'"></div>
+
+  <section class="statistics section-padding section_top">
+    <div class="container-fluid">
+      <header>
+        <h1 class="h3 display top">
+          <i class="fa fa-laptop"></i>Overall Machine Status
+          <ul>
+              <li>
+                  <span class="dot_running"></span>Running</li>
+                  <li>
+                      <span class="dot_idle"></span>Idle</li>
+           
+            <!-- li><span class="dot_idle"></span>Idle</li> -->
+            <li>
+              <span class="dot_stop"></span>Stop</li>
+
+              <li>
+                <span class="dot_net"></span>Net Issue</li>
+             
+          </ul>
+
+        </h1>
+      </header>
+      <div class="row" ng-init="statusinit()">
+
+        <div class="col-lg-12">
+          <div class="card bar-chart-example">
+            <div class="card-block table_overflow" id="exportable">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Company Name</th>
+                    <th>Machine Name</th>
+                    <th>Last Date</th>
+                  </tr>
+                </thead>
+                <tbody ng-repeat="y in companystatus " class="border" >
+                  <tr  ng-class="{stopped :y.machine_status==100,nodata: y.machine_status == null,running: y.machine_status == 3,idle : y.machine_status==0,net : y.machine_status==500}">
+                    <td>{{$index + 1}}</td>
+                    <td>{{y.tenant}}</td>
+                    <td>{{y.machine_name}}</td>
+                    <td>{{y.last_data}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+</div>
+
+
+  

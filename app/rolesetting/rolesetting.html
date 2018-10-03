@@ -1,0 +1,62 @@
+   <div ng-include="'sidebar.html'"></div>
+   <div class="page home-page">     
+   <div ng-include="'header.html'"></div>
+
+    
+
+    <section class="statistics section-padding section-no-padding-bottom section_top" ng-init="rolecreationinit()">
+            <div class="container-fluid">
+                <header>
+                    <h1 class="h3 display"><i class="fa fa-desktop" aria-hidden="true"></i> Menu Configuration <a class="btn_add" ng-click="cleandata()" ng-disabled="client.$invalid" data-toggle="modal" data-target="#exampleModalLabel"><i class="fa fa-cog" aria-hidden="true"></i>  Configure</a>
+                    </h1>
+                </header>
+
+                <div class="row d-flex align-items-stretch">
+                    <div class="col-lg-12" ng-repeat="role in roles">
+
+                    <div class="card items">
+                         <div class="table-responsive">
+                         <br>
+                             <div class="col-md-4">
+                             <div class="input-group col-xs-12 mrg15T mrg15B pad0A">
+                                  <span class="input-group-addon"><i class="fa fa-cog"></i></span>
+                                  <select ng-options="auth.id as auth.authorization_name for auth in authorization" ng-model="rolesetting.pageauthorization_id" class="btn btn-default select-width selectpicker form-control" >
+                                  <option value="">Select authorization type</option>
+                                  </select>
+                             </div>
+                             </div>
+                          </div>
+                          <div class="col-lg-12">
+                          <table  dt-options="dtOptions" class="table table-hover" style="">
+                               <thead> 
+                                    <tr>
+                                      <th>Pages Name</th>
+                                      <th>Action</th>
+                                    </tr>
+                               </thead>
+                               <tbody>
+                                   <tr ng-repeat="page in pages">
+                                       <td>{{ page.page_name }}</td>
+                                       <td>
+                                         <div class="form-group">
+                                               
+                                                <div class="col-xs-8">
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" ng-click="toggleSelection($event,page.id)" ng-checked="checkid(page.id)">
+                                                    </label>
+                                                  
+                                                </div>
+                                            </div>
+                                       </td>
+                                    </tr>
+                               </tbody>
+                             </table>      
+                           </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+<div ng-include="'footer.html'"></div>
+ </div>
